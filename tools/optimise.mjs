@@ -91,6 +91,8 @@ function bbox(raw, x0, y0, x1, y1) {
 
 // Hairline logos need their strokes grown so they survive at header size (smaller number = bolder).
 const logoGrow = { studio: 110 };
+// A wide colour wordmark needs more pixels than a square emblem (longest side, px).
+const logoMax = { studio: 1100 };
 
 // Each site's favicon is its own logo: the mark in the site's accent colour on its dark background.
 const faviconColours = {
@@ -117,7 +119,7 @@ async function makeFavicon(site, maskFile) {
  * Each pixel is pixel = a * logo + (1 - a) * green, so the opacity "a" follows from how green it is,
  * and the green that bled into anti-aliased edges is subtracted back out.
  */
-async function colourLogoFrom(file, dest, site) {
+async function colourLogoFrom(file, dest, site, { favicon = true, max = 640 } = {}) {
   const { data, W, H, C } = await loadRaw(file);
   const rgba = Buffer.alloc(W * H * 4);
   let minX = W, maxX = 0, minY = H, maxY = 0;
@@ -139,9 +141,10 @@ async function colourLogoFrom(file, dest, site) {
   const width = Math.min(W - left, maxX - minX + 1 + pad * 2), height = Math.min(H - top, maxY - minY + 1 + pad * 2);
   const logo = await sharp(rgba, { raw: { width: W, height: H, channels: 4 } })
     .extract({ left, top, width, height })
-    .resize({ width: 640, height: 640, fit: 'inside', withoutEnlargement: true })
+    .resize({ width: max, height: max, fit: 'inside', withoutEnlargement: true })
     .png().toBuffer();
-  await sharp(logo).webp({ lossless: true, effort: 6 }).toFile(dest);
+  if (dest) await sharp(logo).webp({ lossless: true, effort: 6 }).toFile(dest);
+  if (!favicon) return;
   // favicon: the colour logo on the site's dark background
   const [bg] = faviconColours[site] ?? ['#0d0f13'];
   const inner = 54;
@@ -162,11 +165,21 @@ for (const site of readdirSync(join(root, 'art-raw'), { withFileTypes: true }).f
     const { name } = parse(file);
     const from = join(src, file);
 
+    // A site may ship a separate square mark for its favicon (a wide wordmark is unreadable at 64 px).
+    if (name === 'favicon-src') {
+      const dest = join(root, 'public', 'favicons', `${site}.png`);
+      if (!stale(from, dest)) continue;
+      await colourLogoFrom(from, null, site);
+      console.log(`${site}/favicon from favicon-src`); count++;
+      continue;
+    }
+
     if (name === 'logo-color') {
       const dest = join(out, 'logo-color.webp');
       if (!stale(from, dest)) continue;
-      await colourLogoFrom(from, dest, site);
-      console.log(`${site}/logo-color + favicon`); count++;
+      const ownFavicon = existsSync(join(src, 'favicon-src.png'));
+      await colourLogoFrom(from, dest, site, { favicon: !ownFavicon, max: logoMax[site] ?? 640 });
+      console.log(`${site}/logo-color${ownFavicon ? '' : ' + favicon'}`); count++;
       continue;
     }
 

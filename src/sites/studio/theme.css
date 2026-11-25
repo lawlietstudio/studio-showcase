@@ -1,4 +1,4 @@
-/* Lawliet Studio portfolio: dark, cinematic and quiet, so the work is the colour. Ink black, ivory, brass; Instrument Serif. */
+/* Arden Studio portfolio: dark, cinematic and quiet, so the work is the colour. Ink black, ivory, brass; Instrument Serif. */
 .studio {
   --bg: #0d0f13; --bg-alt: #14171d; --bg-dark: #0d0f13;
   --fg: #f3eee7; --fg-muted: rgb(243 238 231 / 0.7); --fg-dark: #f3eee7; --fg-dark-muted: rgb(243 238 231 / 0.72);
@@ -57,11 +57,8 @@
 @media (max-width: 960px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps li:nth-child(odd) { padding-left: 0; border-left: 0; } .contact-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 640px) { .steps { grid-template-columns: minmax(0, 1fr); } .steps li { padding-left: 0 !important; border-left: 0 !important; } }
 
-/* the L's hairline foot and dot need some size to read */
-.studio .brand-mark { --s: 44px !important; }
-.studio .foot-mark { --s: 64px !important; }
-
-/* the colour emblem: arch, L, sunrise and a vermilion seal dot */
-.studio .brand-logo { height: 60px; margin: -4px 0; }
-.studio .foot-logo { height: 120px; }
-@media (max-width: 560px) { .studio .brand-logo { height: 48px; } }
+/* the colour wordmark (compass A, ARDEN, STUDIO) already carries the name, so the text beside it is hidden */
+.studio .brand-name, .studio .foot-name { display: none; }
+.studio .brand-logo { height: 60px; width: auto; margin: -4px 0; }
+.studio .foot-logo { height: 112px; width: auto; }
+@media (max-width: 560px) { .studio .brand-logo { height: 46px; margin: -2px 0; } }

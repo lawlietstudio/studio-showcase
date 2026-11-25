@@ -1,11 +1,11 @@
-# Lawliet Studio: portfolio and demo websites
+# Arden Studio: portfolio and demo websites
 
 One repository, one build, one GitHub Pages site. It holds the studio's portfolio (at the root) and five
 demonstration websites, each in English and Traditional Chinese with its own art direction:
 
 | Path | Site | Look |
 | --- | --- | --- |
-| `/` | **Lawliet Studio** portfolio | dark, cinematic, brass |
+| `/` | **Arden Studio** portfolio | dark, cinematic, brass |
 | `/law/` | Aldridge & Wren LLP (law firm) | classical: ivory, deep green, Cormorant Garamond |
 | `/accounting/` | Marlowe & Finch CPA (accounting firm) | bright and rounded: emerald, Manrope, tabular numerals |
 | `/campaign/` | Elena Voss for Riverside (politician, with news) | bold civic: navy and orange, Barlow Condensed |

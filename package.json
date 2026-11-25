@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "1.0.0",
-  "description": "Lawliet Studio portfolio and five demo websites (law firm, accounting firm, politician, art-supply shop, author).",
+  "description": "Arden Studio portfolio and five demo websites (law firm, accounting firm, politician, art-supply shop, author).",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

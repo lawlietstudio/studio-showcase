@@ -1,13 +1,13 @@
-// Lawliet Studio: the portfolio that wraps up the demo websites. The studio's contact details are placeholders.
+// Arden Studio: the portfolio that wraps up the demo websites. The studio's contact details are placeholders.
 import type { Rec } from '../../lib/i18n';
 
 export const NOTARY_URL = 'https://lawlietstudio.github.io/notary-site-demos/molique/';
 
 export const C = {
-  name: 'Lawliet Studio',
+  name: 'Arden Studio',
   email: 'hello@example.com',
   tagline: { en: 'Websites with the polish of a luxury brand', zh: '擁有奢華品牌質感的網站' } as Rec,
-  metaDescription: { en: 'Lawliet Studio designs and builds bilingual, fast, beautifully art-directed websites for professional firms, shops and individuals. See six live demos.', zh: 'Lawliet Studio 為專業事務所、商店及個人設計並建立雙語、快速、具藝術指導的網站。立即瀏覽六個線上示範。' },
+  metaDescription: { en: 'Arden Studio designs and builds bilingual, fast, beautifully art-directed websites for professional firms, shops and individuals. See six live demos.', zh: 'Arden Studio 為專業事務所、商店及個人設計並建立雙語、快速、具藝術指導的網站。立即瀏覽六個線上示範。' },
   demo: { en: 'Portfolio of demonstration websites. All businesses, people and content in the demos are fictional.', zh: '示範網站作品集。所有示範內的企業、人物及內容均屬虛構。' } as Rec,
   nav: [
     { path: '/', label: { en: 'Home', zh: '首頁' } },
