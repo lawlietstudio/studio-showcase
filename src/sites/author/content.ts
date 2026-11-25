@@ -18,7 +18,7 @@ export const C = {
   cta: { en: 'Join the newsletter', zh: '訂閱通訊' } as Rec,
   hero: {
     eyebrow: { en: 'New book · The Orchard Year', zh: '新書 · The Orchard Year' } as Rec,
-    title: { en: 'Stories about the places we keep returning to.', zh: '關於我們一再回望之地的故事。' } as Rec,
+    title: { en: 'Stories about the places we keep returning to.', zh: '關於我們一再重返之地的故事。' } as Rec,
     lead: { en: 'Iris Calloway is the author of two novels, a collection of essays and, this autumn, a memoir of a year spent restoring her grandfather’s orchard.', zh: 'Iris Calloway 著有兩部小說、一部散文集，今年秋天更推出回憶錄，記述她用一年時間修復祖父果園的故事。' } as Rec,
     latest: { en: 'The latest book', zh: '最新作品' } as Rec,
   },

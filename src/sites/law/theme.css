@@ -99,3 +99,5 @@
   .atty-row:nth-child(even) .card-img, .area-detail:nth-child(even) .copy { order: 0; }
 }
 @media (max-width: 640px) { .areas { grid-template-columns: minmax(0, 1fr); } .law-hero .stats > div { padding: 1.2rem 0.6rem; } }
+
+:lang(zh-Hant) .law-hero h1 { max-width: 12em; font-size: clamp(2.8rem, 6vw, 5.2rem); }

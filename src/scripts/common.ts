@@ -49,3 +49,31 @@ if (!calm && 'IntersectionObserver' in window) {
 } else {
   items.forEach((el) => el.classList.add('is-in'));
 }
+
+// ---- Chinese pages: break lines between words, never inside one ("決策", "法律", "回望") ----
+if (root.lang.startsWith('zh') && 'Segmenter' in Intl) {
+  const seg = new Intl.Segmenter('zh-Hant', { granularity: 'word' });
+  const nodes: Text[] = [];
+  document.querySelectorAll('h1, h2, h3, .lead, .lead-p, .sec-head > p, .page-head p').forEach((el) => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) if (/[一-鿿]/.test(n.textContent ?? '')) nodes.push(n as Text);
+  });
+  for (const node of nodes) {
+    const frag = document.createDocumentFragment();
+    let cur = '';
+    const flush = () => {
+      if (!cur) return;
+      const s = document.createElement('span');
+      s.className = 'nb';
+      s.textContent = cur;
+      frag.append(s);
+      cur = '';
+    };
+    for (const part of seg.segment(node.textContent ?? '')) {
+      if (/^\s+$/.test(part.segment)) { flush(); frag.append(part.segment); continue; }
+      if (part.isWordLike) { flush(); cur = part.segment; } else cur += part.segment; // punctuation stays with the word before it
+    }
+    flush();
+    node.replaceWith(frag);
+  }
+}

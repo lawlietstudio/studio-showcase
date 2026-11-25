@@ -230,3 +230,7 @@ body:has(.menu-toggle:checked) { overflow: hidden; }
   body.site .site-header .brand { font-size: 1rem; letter-spacing: 0.05em; gap: 0; }
   body.site .site-header .brand-mark { display: none; }
 }
+
+/* Chinese line breaking: words (wrapped by common.ts) stay together; headings may be wider than their Latin max-width */
+.nb { white-space: nowrap; }
+:lang(zh-Hant) .page-head h1 { max-width: 18em; }
