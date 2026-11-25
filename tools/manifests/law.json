@@ -2,17 +2,70 @@
   "site": "law",
   "art": "Editorial architectural and interior photography for a prestigious law firm: restrained and authoritative, deep green-black and warm brass tones, natural stone and dark oak, soft directional daylight or warm lamp light, shallow depth of field, subtle film grain, photorealistic. No text, no letters, no logos, no watermarks. Any document or book that appears is filled with realistic small text, never blank.",
   "jobs": [
-    { "file": "hero", "shape": "landscape", "prompt": "A grand neoclassical stone colonnade with tall columns seen from a low angle at dusk, warm light glowing in the tall windows behind, deep teal-green evening sky, a wide stone staircase in the foreground." },
-    { "file": "library", "shape": "landscape", "prompt": "A private law library: floor-to-ceiling dark oak shelves full of leather-bound law reports, a brass rolling ladder, a long reading table with a green banker's lamp and an open volume filled with dense printed text." },
-    { "file": "boardroom", "shape": "landscape", "prompt": "A long polished walnut conference table in a dim modern boardroom, empty leather chairs, a glass wall showing city lights at blue hour, neatly placed legal pads filled with handwritten notes and fountain pens." },
-    { "file": "lobby", "shape": "landscape", "prompt": "A refined law-firm reception hall with a marble floor, a brass-framed double door, a large bronze abstract sculpture on a plinth and soft daylight falling from a high window. No people." },
-    { "file": "detail", "shape": "landscape", "prompt": "Close-up of a brass figurine of the scales of justice on a dark desk beside a wooden gavel and a stack of bound case files with ribbon tabs, shallow depth of field, warm lamp light." },
-    { "file": "portrait-1", "shape": "portrait", "prompt": "Editorial head-and-shoulders portrait of a distinguished man in his early 60s with a trimmed grey beard, charcoal three-piece suit, standing in front of an oak bookcase, soft window light, calm confident expression, looking at the camera. Fictional person." },
-    { "file": "portrait-2", "shape": "portrait", "prompt": "Editorial head-and-shoulders portrait of a woman in her early 50s with dark hair streaked with silver, black tailored blazer, in front of a dark green wall with a gilt picture frame, soft window light, composed warm expression, looking at the camera. Fictional person." },
-    { "file": "portrait-3", "shape": "portrait", "prompt": "Editorial head-and-shoulders portrait of a man in his mid 30s of East Asian descent, navy suit and white shirt, in a bright modern office with a glass partition blurred behind, soft window light, friendly confident expression, looking at the camera. Fictional person." },
-    { "file": "portrait-4", "shape": "portrait", "prompt": "Editorial head-and-shoulders portrait of a woman in her mid 30s of South Asian descent, deep burgundy blazer, in front of an oak bookcase, soft window light, intelligent warm expression, looking at the camera. Fictional person." }
+    {
+      "file": "hero",
+      "shape": "landscape",
+      "prompt": "A grand neoclassical stone colonnade with tall columns seen from a low angle at dusk, warm light glowing in the tall windows behind, deep teal-green evening sky, a wide stone staircase in the foreground."
+    },
+    {
+      "file": "library",
+      "shape": "landscape",
+      "prompt": "A private law library: floor-to-ceiling dark oak shelves full of leather-bound law reports, a brass rolling ladder, a long reading table with a green banker's lamp and an open volume filled with dense printed text."
+    },
+    {
+      "file": "boardroom",
+      "shape": "landscape",
+      "prompt": "A long polished walnut conference table in a dim modern boardroom, empty leather chairs, a glass wall showing city lights at blue hour, neatly placed legal pads filled with handwritten notes and fountain pens."
+    },
+    {
+      "file": "lobby",
+      "shape": "landscape",
+      "prompt": "A refined law-firm reception hall with a marble floor, a brass-framed double door, a large bronze abstract sculpture on a plinth and soft daylight falling from a high window. No people."
+    },
+    {
+      "file": "detail",
+      "shape": "landscape",
+      "prompt": "Close-up of a brass figurine of the scales of justice on a dark desk beside a wooden gavel and a stack of bound case files with ribbon tabs, shallow depth of field, warm lamp light."
+    },
+    {
+      "file": "portrait-1",
+      "shape": "portrait",
+      "prompt": "Editorial head-and-shoulders portrait of a distinguished man in his early 60s with a trimmed grey beard, charcoal three-piece suit, standing in front of an oak bookcase, soft window light, calm confident expression, looking at the camera. Fictional person."
+    },
+    {
+      "file": "portrait-2",
+      "shape": "portrait",
+      "prompt": "Editorial head-and-shoulders portrait of a woman in her early 50s with dark hair streaked with silver, black tailored blazer, in front of a dark green wall with a gilt picture frame, soft window light, composed warm expression, looking at the camera. Fictional person."
+    },
+    {
+      "file": "portrait-3",
+      "shape": "portrait",
+      "prompt": "Editorial head-and-shoulders portrait of a man in his mid 30s of East Asian descent, navy suit and white shirt, in a bright modern office with a glass partition blurred behind, soft window light, friendly confident expression, looking at the camera. Fictional person."
+    },
+    {
+      "file": "portrait-4",
+      "shape": "portrait",
+      "prompt": "Editorial head-and-shoulders portrait of a woman in her mid 30s of South Asian descent, deep burgundy blazer, in front of an oak bookcase, soft window light, intelligent warm expression, looking at the camera. Fictional person."
+    },
+    {
+      "file": "family",
+      "shape": "landscape",
+      "prompt": "A warm, discreet family-law consultation room: two deep leather armchairs angled gently toward each other around a low round oak table with a glass carafe of water and two glasses, a vase of white peonies, linen curtains filtering soft window daylight, a framed abstract landscape print on a deep green wall, no people, calm and humane"
+    },
+    {
+      "file": "employment",
+      "shape": "landscape",
+      "prompt": "A glass-walled meeting room in a modern office at golden hour: a small round walnut table with four upholstered chairs, a brass pendant lamp, a slim brass nameplate on the glass door, and through the glass an out-of-focus open-plan workplace with empty desks and monitors, no people, no readable text"
+    },
+    {
+      "file": "estates",
+      "shape": "landscape",
+      "prompt": "A heritage study desk by a window: a leather-topped oak writing desk with a rolled document tied with a ribbon and sealed with a red wax seal, a fountain pen, a pair of reading glasses and an old brass key beside a green banker's lamp, framed photographs blurred in the background, warm late-afternoon light, no readable text"
+    }
   ],
-  "logo": { "concept": "an abstract law-firm emblem: three slender classical columns supporting a pediment whose triangle contains a small balance beam, drawn with fine even lines inside a circle" },
+  "logo": {
+    "concept": "an abstract law-firm emblem: three slender classical columns supporting a pediment whose triangle contains a small balance beam, drawn with fine even lines inside a circle"
+  },
   "icons": {
     "style": "engraved brass monoline icons with fine parallel hairlines, classical and refined",
     "items": [

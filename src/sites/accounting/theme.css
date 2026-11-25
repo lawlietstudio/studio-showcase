@@ -9,7 +9,7 @@
   --font-body: 'Manrope Variable', 'Noto Sans TC', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
   --h1: clamp(2.7rem, 5.8vw, 5rem); --h2: clamp(2rem, 3.8vw, 3.2rem); --h3: 1.3rem;
-  --card-bg: #fff; --form-bg: #fff;
+  --card-bg: #fff; --form-bg: #fff; --card-px: 1.7rem; --card-pb: 1.9rem;
   --header-solid: rgb(255 255 255 / 0.92); --header-solid-fg: var(--fg);
 }
 .accounting h1, .accounting h2, .accounting h3 { font-weight: 700; letter-spacing: -0.03em; }

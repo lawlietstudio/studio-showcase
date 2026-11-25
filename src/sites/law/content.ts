@@ -94,7 +94,7 @@ export const C = {
         { en: 'Marriage and cohabitation agreements', zh: '婚前協議及同居協議' },
         { en: 'Mediation and collaborative law', zh: '調解及協作法律' },
       ],
-      image: 'library',
+      image: 'family',
     },
     {
       id: 'employment',
@@ -106,7 +106,7 @@ export const C = {
         { en: 'Workplace investigations', zh: '職場調查' },
         { en: 'Restrictive covenants', zh: '限制性條款' },
       ],
-      image: 'boardroom',
+      image: 'employment',
     },
     {
       id: 'estates',
@@ -118,7 +118,7 @@ export const C = {
         { en: 'Estate administration', zh: '遺產管理' },
         { en: 'Estate disputes', zh: '遺產糾紛' },
       ],
-      image: 'library',
+      image: 'estates',
     },
   ],
   attorneysTitle: { en: 'The people you will work with', zh: '與您合作的律師' } as Rec,
