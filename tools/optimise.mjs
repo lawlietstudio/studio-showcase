@@ -112,6 +112,45 @@ async function makeFavicon(site, maskFile) {
     .png().toFile(join(root, 'public', 'favicons', `${site}.png`));
 }
 
+/**
+ * A full-colour logo drawn on a flat pure-green background becomes a transparent WebP.
+ * Each pixel is pixel = a * logo + (1 - a) * green, so the opacity "a" follows from how green it is,
+ * and the green that bled into anti-aliased edges is subtracted back out.
+ */
+async function colourLogoFrom(file, dest, site) {
+  const { data, W, H, C } = await loadRaw(file);
+  const rgba = Buffer.alloc(W * H * 4);
+  let minX = W, maxX = 0, minY = H, maxY = 0;
+  const clamp = (v) => Math.max(0, Math.min(255, Math.round(v)));
+  for (let i = 0; i < W * H; i++) {
+    const r = data[i * C], g = data[i * C + 1], b = data[i * C + 2];
+    const excess = g - Math.max(r, b); // how much greener than the logo's own colours
+    const a = Math.max(0, Math.min(1, (255 - excess) / 225));
+    let R = r, G = g, B = b;
+    if (a > 0.004 && a < 1) { R = r / a; G = (g - (1 - a) * 255) / a; B = b / a; }
+    rgba[i * 4] = clamp(R); rgba[i * 4 + 1] = clamp(G); rgba[i * 4 + 2] = clamp(B); rgba[i * 4 + 3] = Math.round(a * 255);
+    if (a > 0.35) {
+      const x = i % W, y = (i / W) | 0;
+      if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y;
+    }
+  }
+  const pad = Math.round(Math.max(maxX - minX, maxY - minY) * 0.03);
+  const left = Math.max(0, minX - pad), top = Math.max(0, minY - pad);
+  const width = Math.min(W - left, maxX - minX + 1 + pad * 2), height = Math.min(H - top, maxY - minY + 1 + pad * 2);
+  const logo = await sharp(rgba, { raw: { width: W, height: H, channels: 4 } })
+    .extract({ left, top, width, height })
+    .resize({ width: 640, height: 640, fit: 'inside', withoutEnlargement: true })
+    .png().toBuffer();
+  await sharp(logo).webp({ lossless: true, effort: 6 }).toFile(dest);
+  // favicon: the colour logo on the site's dark background
+  const [bg] = faviconColours[site] ?? ['#0d0f13'];
+  const inner = 54;
+  const small = await sharp(logo).resize(inner, inner, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+  mkdirSync(join(root, 'public', 'favicons'), { recursive: true });
+  await sharp({ create: { width: 64, height: 64, channels: 4, background: bg } })
+    .composite([{ input: small, left: 5, top: 5 }]).png().toFile(join(root, 'public', 'favicons', `${site}.png`));
+}
+
 let count = 0;
 for (const site of readdirSync(join(root, 'art-raw'), { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith('_')).map((d) => d.name)) {
   if (wanted.length && !wanted.includes(site)) continue;
@@ -122,6 +161,14 @@ for (const site of readdirSync(join(root, 'art-raw'), { withFileTypes: true }).f
   for (const file of readdirSync(src).filter((f) => f.endsWith('.png'))) {
     const { name } = parse(file);
     const from = join(src, file);
+
+    if (name === 'logo-color') {
+      const dest = join(out, 'logo-color.webp');
+      if (!stale(from, dest)) continue;
+      await colourLogoFrom(from, dest, site);
+      console.log(`${site}/logo-color + favicon`); count++;
+      continue;
+    }
 
     if (name === 'logo') {
       const dest = join(out, 'logo.webp');

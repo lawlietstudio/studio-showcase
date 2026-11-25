@@ -24,3 +24,11 @@ export function logo(site: string): ImageMetadata {
 
 /** True when an image exists (lets a page degrade gracefully while artwork is still being generated). */
 export const has = (site: string, name: string): boolean => `../assets/${site}/${name}.webp` in all;
+
+/** A full-colour logo (transparent WebP) when the site has one; otherwise sites fall back to the single-colour mask. */
+export const hasColourLogo = (site: string): boolean => `../assets/${site}/logo-color.webp` in all;
+export function colourLogo(site: string): ImageMetadata {
+  const m = all[`../assets/${site}/logo-color.webp`];
+  if (!m) throw new Error(`Missing colour logo for ${site}`);
+  return m;
+}

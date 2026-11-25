@@ -4,7 +4,7 @@
 import '../styles/kit.css';
 import Ico from './Ico.astro';
 import { LANGS, asset, href, t, telHref, type Lang } from '../lib/i18n';
-import { logo, has } from '../lib/assets';
+import { logo, has, hasColourLogo, colourLogo } from '../lib/assets';
 import type { SiteCfg } from '../lib/types';
 
 interface Props {
@@ -34,6 +34,7 @@ const names: Record<Lang, { short: string; full: string; tag: string }> = {
 };
 const current = (p: string) => (p === '/' ? path === '/' : path === p || path.startsWith(p));
 const withLogo = has(id, 'logo');
+const colour = hasColourLogo(id) ? colourLogo(id) : null;
 const half = Math.ceil(cfg.nav.length / 2);
 const navLink = (n: (typeof cfg.nav)[number]) => ({ href: href(base, n.path, lang), label: t(n.label, lang), active: current(n.path) });
 ---
@@ -69,7 +70,7 @@ const navLink = (n: (typeof cfg.nav)[number]) => ({ href: href(base, n.path, lan
         )}
 
         <a href={href(base, '/', lang)} class="brand" aria-label={`${cfg.name} – home`}>
-          {withLogo && <Ico src={logo(id)} size={34} class="brand-mark" />}
+          {colour ? <img class="brand-logo" src={colour.src} width={colour.width} height={colour.height} alt="" /> : withLogo && <Ico src={logo(id)} size={34} class="brand-mark" />}
           <span class="brand-name">{cfg.name}</span>
         </a>
 
@@ -113,7 +114,7 @@ const navLink = (n: (typeof cfg.nav)[number]) => ({ href: href(base, n.path, lan
     <footer class="site-footer">
       <div class="container">
         <div class="foot-top">
-          {withLogo && <Ico src={logo(id)} size={48} class="foot-mark" />}
+          {colour ? <img class="foot-logo" src={colour.src} width={colour.width} height={colour.height} alt="" /> : withLogo && <Ico src={logo(id)} size={48} class="foot-mark" />}
           <p class="foot-name">{cfg.name}</p>
           <p class="foot-tag">{t(cfg.tagline, lang)}</p>
         </div>

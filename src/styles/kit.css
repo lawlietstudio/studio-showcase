@@ -242,3 +242,7 @@ body:has(.menu-toggle:checked) { overflow: hidden; }
 @media (max-width: 1179px) {
   body.site .site-header, body.site .site-header.is-solid { -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
+
+/* full-colour logos (used instead of the single-colour mask when a site has one) */
+.brand-logo { display: block; flex: none; width: auto; height: 46px; }
+.foot-logo { display: block; width: auto; height: 96px; margin: 0 auto 1.2rem; }

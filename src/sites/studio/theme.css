@@ -60,3 +60,8 @@
 /* the L's hairline foot and dot need some size to read */
 .studio .brand-mark { --s: 44px !important; }
 .studio .foot-mark { --s: 64px !important; }
+
+/* the colour emblem: arch, L, sunrise and a vermilion seal dot */
+.studio .brand-logo { height: 60px; margin: -4px 0; }
+.studio .foot-logo { height: 120px; }
+@media (max-width: 560px) { .studio .brand-logo { height: 48px; } }
