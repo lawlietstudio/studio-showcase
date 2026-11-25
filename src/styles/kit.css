@@ -234,3 +234,10 @@ body:has(.menu-toggle:checked) { overflow: hidden; }
 /* Chinese line breaking: words (wrapped by common.ts) stay together; headings may be wider than their Latin max-width */
 .nb { white-space: nowrap; }
 :lang(zh-Hant) .page-head h1 { max-width: 18em; }
+
+/* A backdrop-filter (or filter/transform) on the header would make it the containing block of the
+   fixed full-screen drawer and squash the menu into the header bar. The drawer only exists on narrow
+   screens, so the frosted effect is dropped there. */
+@media (max-width: 1179px) {
+  body.site .site-header, body.site .site-header.is-solid { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
