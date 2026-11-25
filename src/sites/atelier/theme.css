@@ -70,7 +70,13 @@
 /* cart */
 .cart-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto auto auto; gap: 1.2rem; align-items: center; padding: 1.2rem 0; border-top: 1px solid var(--line); }
 .cart-row .thumb img { width: 96px; height: 96px; object-fit: cover; } .cart-row .info a { display: block; font: 500 1.2rem var(--font-display); } .cart-row .info span { color: var(--fg-muted); }
-.cart-row .qty { display: inline-flex; align-items: center; gap: 0.6rem; } .cart-row .qty button { width: 2rem; height: 2rem; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 1.1rem; } .cart-row .qty button:hover { background: var(--fg); color: var(--bg); }
+.cart-row .qty { display: inline-flex; align-items: center; gap: 0.6rem; }
+/* the + and − are drawn as lines (a font glyph sits low in its box), so they are exactly centred */
+.cart-row .qty button { position: relative; width: 2rem; height: 2rem; padding: 0; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; font-size: 0; line-height: 0; }
+.cart-row .qty button::before, .cart-row .qty button::after { content: ''; position: absolute; left: 50%; top: 50%; width: 0.7rem; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
+.cart-row .qty button[data-d="1"]::after { transform: translate(-50%, -50%) rotate(90deg); }
+.cart-row .qty button[data-d="-1"]::after { display: none; }
+.cart-row .qty button:hover { background: var(--fg); color: var(--bg); }
 .cart-row .line-total { min-width: 4rem; text-align: right; font-weight: 500; } .cart-row .remove { border: 0; background: none; color: var(--fg-muted); text-decoration: underline; cursor: pointer; }
 .cart-sum { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.4rem; padding: 1.6rem 0; border-top: 2px solid var(--fg); }
 .cart-sum strong { font: 500 2rem var(--font-display); } .cart-note { margin-top: 1rem; font-size: 0.88rem; color: var(--fg-muted); }
