@@ -37,12 +37,26 @@
 .cmp-hero .portrait::before { content: ''; position: absolute; left: -12%; right: -30%; bottom: 0; top: 14%; background: var(--accent); border-radius: 50% 0 0 0 / 42% 0 0 0; }
 .cmp-hero .portrait picture { position: relative; display: block; }
 .cmp-hero .portrait img { position: relative; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 12px 12px 0 0; box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.6); }
-.ticker { overflow: hidden; background: var(--accent); color: #fff; }
+/* ticker: scrolls by default. With reduced motion (a system setting) or when stopped it becomes a still, wrapped, centred
+   line that cannot be cut off, and the round button starts or stops the scrolling. */
+.ticker { position: relative; overflow: hidden; background: var(--accent); color: #fff; }
+.ticker-view { overflow: hidden; }
 .ticker-track { display: flex; width: max-content; animation: tick 40s linear infinite; }
 .ticker ul { display: flex; flex: none; }
 .ticker li { display: flex; align-items: center; padding: 0.9rem 0; font: 700 1.1rem/1 var(--font-display); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
 .ticker li::after { content: '★'; margin: 0 2rem; font-size: 0.8rem; }
-@keyframes tick { to { transform: translateX(-50%); } } .calm .ticker-track { animation: none; }
+@keyframes tick { to { transform: translateX(-50%); } }
+.ticker.is-stopped .ticker-track, .calm .ticker:not(.is-playing) .ticker-track { width: auto; justify-content: center; padding: 0.3rem 4.5rem; animation: none; }
+.ticker.is-stopped ul, .calm .ticker:not(.is-playing) ul { flex: 0 1 auto; max-width: 100%; flex-wrap: wrap; justify-content: center; }
+.ticker.is-stopped ul:last-child, .calm .ticker:not(.is-playing) ul:last-child { display: none; }
+.ticker.is-stopped li, .calm .ticker:not(.is-playing) li { padding: 0.6rem 1.1rem; }
+.ticker.is-stopped li::after, .calm .ticker:not(.is-playing) li::after { display: none; }
+.ticker.is-stopped li::before, .calm .ticker:not(.is-playing) li::before { content: '★'; margin-right: 0.7rem; font-size: 0.8rem; }
+.ticker::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 5rem; background: linear-gradient(90deg, transparent, var(--accent) 65%); pointer-events: none; }
+.ticker-toggle { display: none; position: absolute; top: 50%; right: 1rem; z-index: 2; width: 2rem; height: 2rem; padding: 0; transform: translateY(-50%); border: 1px solid rgb(255 255 255 / 0.65); border-radius: 50%; background: var(--accent); color: #fff; cursor: pointer; }
+.js .ticker-toggle { display: block; } .ticker-toggle:hover { background: #fff; color: var(--accent); } .ticker-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.ticker-toggle::before { content: ''; position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform: translate(-38%, -50%); border: 0.42rem solid transparent; border-left: 0.7rem solid currentColor; border-right: 0; } /* play icon */
+.ticker.is-playing .ticker-toggle::before { width: 0.7rem; height: 0.8rem; transform: translate(-50%, -50%); box-sizing: border-box; border: 0; border-left: 3px solid currentColor; border-right: 3px solid currentColor; } /* pause icon */
 .rise { opacity: 0; transform: translateY(24px); animation: rise 0.9s var(--ease) forwards; } .rise.d1 { animation-delay: 0.05s; } .rise.d2 { animation-delay: 0.2s; } .rise.d3 { animation-delay: 0.35s; } .rise.d4 { animation-delay: 0.5s; }
 @keyframes rise { to { opacity: 1; transform: none; } } .calm .rise { animation: none; opacity: 1; transform: none; }
 
@@ -62,6 +76,7 @@
 .news-card h3 { font-size: 1.9rem; }
 .news-feature { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem; align-items: center; margin-bottom: 2.5rem; }
 .news-feature .card-img { --ratio: 16 / 10; } .news-feature h3 { font-size: clamp(2.4rem, 4vw, 3.6rem); }
+.news-feature .feature-body { padding: clamp(1.6rem, 3vw, 2.6rem); }
 .article p { font: 400 1.22rem/1.8 var(--font-serif); color: #243a52; } .article-meta { margin: 0 0 1.4rem; font: 700 1rem var(--font-display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-2); }
 .article-meta + p::first-letter { float: left; margin: 0.06em 0.1em 0 0; font: 800 5rem/0.8 var(--font-display); color: var(--accent); }
 :lang(zh-Hant) .article-meta + p::first-letter { all: unset; }

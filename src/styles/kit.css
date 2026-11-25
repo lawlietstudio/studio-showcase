@@ -79,7 +79,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .hdr-left .hd-inner { grid-template-columns: auto 1fr; }
 .hdr-left .hd-right { gap: 2.2rem; }
 /* stacked layout: brand centred, nav row beneath */
-.hdr-stack .hd-inner { grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; height: auto; padding: 1rem 0 0.4rem; row-gap: 0.2rem; }
+.hdr-stack .hd-inner { grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; height: auto; padding: 1rem 0 1rem; row-gap: 0.3rem; }
 .hdr-stack .brand { grid-column: 2; grid-row: 1; justify-self: center; font-size: 1.7rem; }
 .hdr-stack .hd-right { grid-column: 3; grid-row: 1; }
 .hdr-stack .hd-stack { grid-column: 1 / -1; grid-row: 2; justify-content: center; gap: 2.6rem; }

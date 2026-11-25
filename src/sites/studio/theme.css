@@ -45,7 +45,7 @@
 .tools li { position: relative; padding: 0.9rem 0 0.9rem 1.7rem; border-top: 1px solid var(--line); } .tools li:last-child { border-bottom: 1px solid var(--line); } .tools li::before { content: ''; position: absolute; left: 0.1rem; top: 50%; width: 6px; height: 6px; border: 1px solid var(--accent); transform: translateY(-50%) rotate(45deg); }
 
 /* case study */
-.swatches { display: flex; gap: 0.6rem; margin: 0.6rem 0 1.6rem; } .swatch { flex: 1; height: 4.6rem; border: 1px solid var(--line); display: flex; align-items: flex-end; padding: 0.5rem; font: 500 0.7rem var(--font-body); letter-spacing: 0.08em; }
+.swatches { display: flex; gap: 0.6rem; margin: 0.6rem 0 1.6rem; } .swatch { flex: 1; height: 4.6rem; border: 1px solid var(--line); display: flex; align-items: flex-end; padding: 0.7rem 0.8rem; font: 500 0.7rem var(--font-body); letter-spacing: 0.08em; }
 .panel { padding: 2rem; border: 1px solid var(--line); background: var(--bg-alt); } .panel h3 { font: 600 0.7rem/1 var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; } .panel p { margin: 0 0 1.4rem; font: 400 1.5rem/1.3 var(--font-display); }
 .case-shot { overflow: hidden; } .case-shot img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; }
 .next { display: block; padding: clamp(3rem, 6vw, 5rem) 0; text-align: center; border-top: 1px solid var(--line); } .next small { display: block; margin-bottom: 0.8rem; font: 600 0.7rem var(--font-body); letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); } .next strong { font: 400 clamp(2.4rem, 5vw, 4.4rem)/1 var(--font-display); transition: color 0.4s; } .next:hover strong { color: var(--accent); }

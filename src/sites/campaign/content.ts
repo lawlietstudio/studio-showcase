@@ -31,6 +31,7 @@ export const C = {
     { en: 'Door-knocking day: Sunday 13:00', zh: '逐戶拜訪日：星期日 13:00' },
     { en: 'New plan: 2,000 homes near transit', zh: '新計劃：公共交通沿線 2,000 個單位' },
   ] as Rec[],
+  tickerControl: { pause: { en: 'Pause scrolling', zh: '暫停滾動' } as Rec, play: { en: 'Start scrolling', zh: '開始滾動' } as Rec },
   prioritiesTitle: { en: 'Six priorities for Ward 4', zh: '第四選區六大政綱' } as Rec,
   prioritiesLead: { en: 'Practical commitments, each with a number and a deadline, so you can hold me to them.', zh: '每一項都是具體承諾，附有數字與期限，歡迎您監督我兌現。' } as Rec,
   priorities: [

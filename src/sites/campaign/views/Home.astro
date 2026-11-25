@@ -32,10 +32,13 @@ const [first, ...rest] = C.news.slice(0, 4);
     </div>
   </section>
 
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      {[0, 1].map(() => <ul>{C.ticker.map((x) => <li>{L(x)}</li>)}</ul>)}
+  <div class="ticker" data-ticker>
+    <div class="ticker-view" aria-hidden="true">
+      <div class="ticker-track">
+        {[0, 1].map(() => <ul>{C.ticker.map((x) => <li>{L(x)}</li>)}</ul>)}
+      </div>
     </div>
+    <button type="button" class="ticker-toggle" aria-label={L(C.tickerControl.pause)} data-label-pause={L(C.tickerControl.pause)} data-label-play={L(C.tickerControl.play)}></button>
   </div>
 
   <section class="section">
@@ -75,7 +78,7 @@ const [first, ...rest] = C.news.slice(0, 4);
       <header class="sec-head reveal"><p class="eyebrow">{L(C.strings.latest)}</p><h2>{L(C.newsTitle)}</h2></header>
       <a class="news-feature card news-card reveal" href={H(`/news/${first.slug}/`)}>
         <div class="card-img"><Img src={photo('campaign', first.image)} alt="" sizes="(min-width: 960px) 700px, 100vw" widths={[600, 1000, 1400]} /></div>
-        <div><p class="meta"><span>{L(first.tag)}</span><span>{first.date}</span></p><h3 style="margin:0.6rem 0 1rem">{L(first.title)}</h3><p style="color:var(--fg-muted);font-size:1.15rem">{L(first.excerpt)}</p><span class="link-arrow">{L(C.strings.read)}<span class="arr" aria-hidden="true"></span></span></div>
+        <div class="feature-body"><p class="meta"><span>{L(first.tag)}</span><span>{first.date}</span></p><h3 style="margin:0.6rem 0 1rem">{L(first.title)}</h3><p style="color:var(--fg-muted);font-size:1.15rem">{L(first.excerpt)}</p><span class="link-arrow">{L(C.strings.read)}<span class="arr" aria-hidden="true"></span></span></div>
       </a>
       <div class="grid cols-3">
         {rest.map((a) => (
@@ -101,3 +104,22 @@ const [first, ...rest] = C.news.slice(0, 4);
 
   <CtaBand lang={lang} />
 </Layout>
+
+<script>
+  // The ticker scrolls by default. Visitors whose system asks for reduced motion get a still, wrapped line
+  // instead (it can never be cut off mid-word) and can start the scrolling with the round button.
+  const calm = document.documentElement.classList.contains('calm');
+  document.querySelectorAll<HTMLElement>('[data-ticker]').forEach((el) => {
+    const btn = el.querySelector<HTMLButtonElement>('.ticker-toggle');
+    if (!btn) return;
+    const show = (play: boolean) => {
+      el.classList.toggle('is-playing', play);
+      el.classList.toggle('is-stopped', !play);
+      const label = (play ? btn.dataset.labelPause : btn.dataset.labelPlay) ?? '';
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
+    };
+    show(!calm);
+    btn.addEventListener('click', () => show(!el.classList.contains('is-playing')));
+  });
+</script>
