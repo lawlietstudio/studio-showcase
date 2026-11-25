@@ -1,0 +1,9 @@
+---
+import { lawRoutes } from '../../sites/law/routes';
+
+export function getStaticPaths() {
+  return lawRoutes();
+}
+const { View, ...props } = Astro.props;
+---
+<View {...props} />

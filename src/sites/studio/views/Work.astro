@@ -1,0 +1,19 @@
+---
+import Layout from '../Layout.astro';
+import ProjectCard from '../ProjectCard.astro';
+import CtaBlock from '../CtaBlock.astro';
+import PageHead from '../../../components/PageHead.astro';
+import { photo } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/work/" title={L(C.nav[1].label)} description={L(C.workLead)}>
+  <PageHead title={L(C.workTitle)} lead={L(C.workLead)} eyebrow={L(C.nav[1].label)} image={photo('studio', 'craft')} />
+  <section class="section">
+    <div class="container"><div class="grid cols-3">{C.projects.map((p) => <ProjectCard p={p} lang={lang} />)}</div></div>
+  </section>
+  <CtaBlock lang={lang} />
+</Layout>

@@ -1,0 +1,161 @@
+---
+// Shared page shell: <head>, header (three layouts), language dropdown, mobile drawer and footer.
+// Each site's Layout.astro imports its fonts and theme CSS, then renders this with its own config.
+import '../styles/kit.css';
+import Ico from './Ico.astro';
+import { LANGS, asset, href, t, telHref, type Lang } from '../lib/i18n';
+import { logo, has } from '../lib/assets';
+import type { SiteCfg } from '../lib/types';
+
+interface Props {
+  cfg: SiteCfg;
+  lang: Lang;
+  /** Language-neutral path of this page, e.g. "/about/". */
+  path: string;
+  title?: string;
+  description?: string;
+  /** Extra classes on <body> (theme hooks). */
+  bodyClass?: string;
+}
+
+const { cfg, lang, path, title, description, bodyClass = '' } = Astro.props;
+const id = cfg.id;
+const base = cfg.base ?? id;
+const S = cfg.strings;
+const fullTitle = title ? `${title} – ${cfg.name}` : `${cfg.name} – ${t(cfg.tagline, lang)}`;
+const desc = description ?? t(cfg.tagline, lang);
+const robots = import.meta.env.PUBLIC_DEMO === '1' ? 'noindex, nofollow' : 'index, follow';
+const origin = Astro.site ?? Astro.url;
+const alt = (l: Lang) => new URL(href(base, path, l), origin).href;
+const year = new Date().getFullYear();
+const names: Record<Lang, { short: string; full: string; tag: string }> = {
+  en: { short: 'EN', full: 'English', tag: 'en' },
+  zh: { short: '中文', full: '繁體中文', tag: 'zh-Hant' },
+};
+const current = (p: string) => (p === '/' ? path === '/' : path === p || path.startsWith(p));
+const withLogo = has(id, 'logo');
+const half = Math.ceil(cfg.nav.length / 2);
+const navLink = (n: (typeof cfg.nav)[number]) => ({ href: href(base, n.path, lang), label: t(n.label, lang), active: current(n.path) });
+---
+<html lang={names[lang].tag} data-site={id}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content={cfg.themeColor} />
+    <link rel="icon" type="image/svg+xml" href={asset('/favicon.svg')} />
+    <link rel="alternate" hreflang="en" href={alt('en')} />
+    <link rel="alternate" hreflang="zh-Hant" href={alt('zh')} />
+    <link rel="alternate" hreflang="x-default" href={alt('en')} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('calm'); } catch (e) {}
+    </script>
+  </head>
+  <body class={`site ${id} ${bodyClass}`}>
+    <a href="#main" class="skip">{t(S.skip, lang)}</a>
+
+    <header class={`site-header hdr-${cfg.header}`} data-header>
+      <div class="hd-inner">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label={t(S.menu, lang)} />
+        <label for="menu-toggle" class="burger" aria-hidden="true"><span></span><span></span></label>
+
+        {cfg.header === 'split' && (
+          <nav class="hd-nav hd-left" aria-label="Main">
+            {cfg.nav.slice(0, half).map((n) => { const l = navLink(n); return <a href={l.href} class:list={{ 'is-active': l.active }} aria-current={l.active ? 'page' : undefined}>{l.label}</a>; })}
+          </nav>
+        )}
+
+        <a href={href(base, '/', lang)} class="brand" aria-label={`${cfg.name} – home`}>
+          {withLogo && <Ico src={logo(id)} size={34} class="brand-mark" />}
+          <span class="brand-name">{cfg.name}</span>
+        </a>
+
+        <div class="hd-right">
+          {cfg.header !== 'stack' && (
+            <nav class="hd-nav" aria-label={cfg.header === 'split' ? 'Secondary' : 'Main'}>
+              {(cfg.header === 'split' ? cfg.nav.slice(half) : cfg.nav).map((n) => { const l = navLink(n); return <a href={l.href} class:list={{ 'is-active': l.active }} aria-current={l.active ? 'page' : undefined}>{l.label}</a>; })}
+            </nav>
+          )}
+          <details class="lang" data-lang-switch>
+            <summary aria-label={t(S.language, lang)}><span>{names[lang].short}</span><span class="chev" aria-hidden="true"></span></summary>
+            <ul class="lang-menu">
+              {LANGS.map((l) => (
+                <li><a href={href(base, path, l)} hreflang={names[l].tag} lang={names[l].tag} data-lang-link={l} class:list={{ 'is-current': l === lang }} aria-current={l === lang ? 'true' : undefined}>{names[l].full}</a></li>
+              ))}
+            </ul>
+          </details>
+          <slot name="header-extra" />
+          {cfg.cta && cfg.header === 'left' && <a href={href(base, cfg.cta.path, lang)} class="btn btn-primary btn-sm hd-cta">{t(cfg.cta.label, lang)}</a>}
+        </div>
+
+        {cfg.header === 'stack' && (
+          <nav class="hd-nav hd-stack" aria-label="Main">
+            {cfg.nav.map((n) => { const l = navLink(n); return <a href={l.href} class:list={{ 'is-active': l.active }} aria-current={l.active ? 'page' : undefined}>{l.label}</a>; })}
+          </nav>
+        )}
+
+        <div class="drawer">
+          <nav aria-label="Menu">
+            {cfg.nav.map((n) => { const l = navLink(n); return <a href={l.href} class:list={{ 'is-active': l.active }}>{l.label}</a>; })}
+          </nav>
+          {cfg.cta && <a href={href(base, cfg.cta.path, lang)} class="btn btn-primary">{t(cfg.cta.label, lang)}</a>}
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="foot-top">
+          {withLogo && <Ico src={logo(id)} size={48} class="foot-mark" />}
+          <p class="foot-name">{cfg.name}</p>
+          <p class="foot-tag">{t(cfg.tagline, lang)}</p>
+        </div>
+        <div class="foot-grid">
+          <div>
+            <h3>{t(S.explore, lang)}</h3>
+            <ul>{cfg.nav.map((n) => <li><a href={href(base, n.path, lang)}>{t(n.label, lang)}</a></li>)}</ul>
+          </div>
+          {(cfg.footerCols ?? []).map((c) => (
+            <div>
+              <h3>{t(c.title, lang)}</h3>
+              <ul>{c.links.map((n) => <li><a href={href(base, n.path, lang)}>{t(n.label, lang)}</a></li>)}</ul>
+            </div>
+          ))}
+          {cfg.contact && (
+            <div>
+              <h3>{t(S.contact, lang)}</h3>
+              <ul>
+                {cfg.contact.phone && <li><a href={telHref(cfg.contact.phone)}>{cfg.contact.phone}</a></li>}
+                {cfg.contact.email && <li><a href={`mailto:${cfg.contact.email}`}>{cfg.contact.email}</a></li>}
+                {cfg.contact.address && <li>{t(cfg.contact.address, lang)}</li>}
+                {cfg.contact.hours && <li>{t(cfg.contact.hours, lang)}</li>}
+              </ul>
+            </div>
+          )}
+          <div>
+            <h3>{t(S.language, lang)}</h3>
+            <ul>
+              {LANGS.map((l) => <li><a href={href(base, path, l)} hreflang={names[l].tag} data-lang-link={l} class:list={{ 'is-current': l === lang }}>{names[l].full}</a></li>)}
+              {base !== '' && <li><a href={href('', '/', lang)}>{lang === 'zh' ? '← 返回作品集' : '← Back to portfolio'}</a></li>}
+            </ul>
+          </div>
+        </div>
+        <div class="foot-base">
+          <span>© {year} {cfg.name}</span>
+          <span>{t(cfg.footerNote, lang)}</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import '../scripts/common.ts';
+    </script>
+  </body>
+</html>

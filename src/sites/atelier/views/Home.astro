@@ -1,0 +1,74 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import ProductCard from '../ProductCard.astro';
+import Img from '../../../components/Img.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const H = (p: string) => href('atelier', p, lang);
+const featured = C.featuredSlugs.map((s) => C.products.find((p) => p.slug === s)!);
+---
+<Layout lang={lang} path="/" description={L(C.metaDescription)}>
+  <section class="at-hero">
+    <div class="container wrap">
+      <div class="copy">
+        <span class="vertical rise d1" aria-hidden="true">{C.hero.vertical}</span>
+        <p class="eyebrow rise d1">{L(C.hero.eyebrow)}</p>
+        <h1 class="rise d2">{L(C.hero.title)}</h1>
+        <p class="lead rise d3">{L(C.hero.lead)}</p>
+        <a href={H('/shop/')} class="btn btn-primary rise d4">{L(C.cta)}<span class="arr" aria-hidden="true"></span></a>
+      </div>
+      <div class="photo rise d3">
+        <Img src={photo('atelier', 'hero')} alt={lang === 'zh' ? '和紙上的毛筆、墨條、水彩及一個墨圈' : 'Brushes, ink, watercolours and an ink circle on washi paper'} sizes="(min-width: 960px) 600px, 100vw" widths={[600, 900, 1300]} eager />
+        <span class="seal" aria-hidden="true">雲</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L({ en: 'Collection', zh: '系列' })}</p><h2>{L(C.featuredTitle)}</h2></header>
+      <div class="grid cols-4">{featured.map((p) => <ProductCard p={p} lang={lang} />)}</div>
+      <p class="center reveal" style="margin-top:2.6rem"><a href={H('/shop/')} class="link-arrow">{L({ en: 'View all products', zh: '查看全部商品' })}<span class="arr" aria-hidden="true"></span></a></p>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal"><h2>{L(C.categoriesTitle)}</h2></header>
+      <div class="grid cols-4">
+        {C.categories.map((c) => (
+          <a class="cat-tile reveal" href={`${H('/shop/')}#${c.id}`}><Ico src={icon('atelier', c.icon)} /><h3>{L(c.name)}</h3></a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L({ en: 'Craft', zh: '工藝' })}</p><h2>{L(C.craftTitle)}</h2></header>
+      {C.craft.map((c) => (
+        <div class="craft reveal">
+          <div class="pic"><Img src={photo('atelier', c.image)} alt="" sizes="(min-width: 960px) 560px, 100vw" widths={[600, 900, 1200]} /></div>
+          <div><h3 style="font-size:2rem;margin-bottom:1rem">{L(c.title)}</h3><p>{L(c.text)}</p></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal"><h2>{L(C.whyTitle)}</h2></header>
+      <div class="grid cols-3">
+        {C.why.map((w) => <article class="why-card reveal"><Ico src={icon('atelier', w.icon)} /><h3>{L(w.title)}</h3><p>{L(w.text)}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</Layout>

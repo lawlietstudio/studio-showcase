@@ -1,0 +1,28 @@
+---
+import Layout from '../Layout.astro';
+import CtaBlock from '../CtaBlock.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/approach/" title={L(C.nav[2].label)} description={L(C.approachLead)}>
+  <PageHead title={L(C.approachTitle)} lead={L(C.approachLead)} eyebrow={L(C.nav[2].label)} image={photo('studio', 'hero')} />
+  <section class="section">
+    <div class="container"><ol class="steps">{C.steps.map((s, i) => <li class="reveal"><span class="no">0{i + 1}</span><h3>{L(s.title)}</h3><p>{L(s.text)}</p></li>)}</ol></div>
+  </section>
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal"><h2>{L(C.capabilitiesTitle)}</h2></header>
+      <div class="grid cols-3">{C.capabilities.map((c) => <article class="cap reveal"><Ico src={icon('studio', c.icon)} /><h3>{L(c.title)}</h3><p>{L(c.text)}</p></article>)}</div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="max-width:56rem"><header class="sec-head reveal"><h2>{L(C.toolsTitle)}</h2></header><ul class="tools reveal">{C.tools.map((x) => <li>{L(x)}</li>)}</ul></div>
+  </section>
+  <CtaBlock lang={lang} />
+</Layout>

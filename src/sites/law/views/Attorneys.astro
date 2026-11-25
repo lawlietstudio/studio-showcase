@@ -1,0 +1,31 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/attorneys/" title={L(C.nav[2].label)} description={L(C.attorneysTitle)}>
+  <PageHead title={L(C.attorneysTitle)} eyebrow={L(C.nav[2].label)} image={photo('law', 'boardroom')} center />
+  <section class="section">
+    <div class="container">
+      {C.attorneys.map((a) => (
+        <article class="atty-row reveal">
+          <div class="card"><div class="card-img"><Img src={photo('law', a.image)} alt={a.name} sizes="(min-width: 960px) 400px, 100vw" widths={[480, 800]} /></div></div>
+          <div>
+            <p class="eyebrow">{L(a.role)}</p>
+            <h2>{a.name}</h2>
+            <p style="margin-top:1.2rem;font-size:1.1rem;color:var(--fg-muted)">{L(a.bio)}</p>
+            <ul>{a.facts.map((f) => <li>{L(f)}</li>)}</ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

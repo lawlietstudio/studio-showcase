@@ -1,0 +1,12 @@
+---
+// A book cover: the AI-generated artwork carries no lettering, so the title and author are set in HTML on top.
+import Img from '../../components/Img.astro';
+import { photo } from '../../lib/assets';
+import { C } from './content';
+
+const { book, size = 'md', eager = false } = Astro.props as { book: (typeof C.books)[number]; size?: 'sm' | 'md'; eager?: boolean };
+---
+<div class:list={['cover', `cover-${size}`]}>
+  <Img src={photo('author', book.cover)} alt="" sizes="(min-width: 960px) 360px, 70vw" widths={[400, 700, 1000]} eager={eager} />
+  <div class="cover-text" aria-hidden="true"><span class="cover-title">{book.title}</span><span class="cover-author">{C.name}</span></div>
+</div>

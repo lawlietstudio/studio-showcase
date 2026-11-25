@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+# raw Codex output (PNG) is kept out of the repo; only the optimised WebP files are committed
+art-raw/

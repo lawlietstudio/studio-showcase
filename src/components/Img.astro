@@ -1,0 +1,7 @@
+---
+// Responsive photograph: several WebP widths generated at build time.
+import { Image } from 'astro:assets';
+
+const { src, alt = '', class: className, sizes = '100vw', widths = [480, 800, 1200, 1600], eager = false } = Astro.props;
+---
+<Image src={src} alt={alt} class={className} widths={widths} sizes={sizes} format="webp" quality={78} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async" />

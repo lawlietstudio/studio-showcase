@@ -1,0 +1,37 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const A = C.about;
+---
+<Layout lang={lang} path="/about/" title={L(C.nav[2].label)} description={L(A.lead)}>
+  <PageHead title={L(A.title)} lead={L(A.lead)} eyebrow={L(C.nav[2].label)} plain />
+  <section class="section">
+    <div class="container split">
+      <div class="portrait reveal"><Img src={photo('author', 'portrait')} alt="Iris Calloway" sizes="(min-width: 960px) 520px, 100vw" widths={[500, 800, 1100]} /></div>
+      <div class="reveal">{A.bio.map((p) => <p style="font-size:1.2rem">{L(p)}</p>)}</div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container">
+      <div class="duo reveal">
+        <Img src={photo('author', 'desk')} alt={lang === 'zh' ? '雨天窗邊的寫作桌' : 'A writing desk by a rainy window'} sizes="(min-width: 960px) 600px, 50vw" widths={[500, 800, 1100]} />
+        <Img src={photo('author', 'manuscript')} alt={lang === 'zh' ? '附有紅筆修改的手稿' : 'Manuscript pages with red-pen edits'} sizes="(min-width: 960px) 600px, 50vw" widths={[500, 800, 1100]} />
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container split" style="align-items:start">
+      <div class="reveal"><h2 style="margin-bottom:1.6rem">{L(A.awardsTitle)}</h2><ul class="awards">{A.awards.map((a) => <li><b>{a.year}</b><span>{L(a.text)}</span></li>)}</ul></div>
+      <div class="reveal"><h2>{L(A.qaTitle)}</h2><dl class="qa">{A.qa.map((x) => <><dt>{L(x.q)}</dt><dd>{L(x.a)}</dd></>)}</dl></div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

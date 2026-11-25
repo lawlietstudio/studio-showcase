@@ -1,0 +1,9 @@
+---
+import { accountingRoutes } from '../../sites/accounting/routes';
+
+export function getStaticPaths() {
+  return accountingRoutes();
+}
+const { View, ...props } = Astro.props;
+---
+<View {...props} />

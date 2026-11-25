@@ -1,0 +1,20 @@
+{
+  "site": "studio",
+  "art": "Premium dark editorial art direction for a boutique web-design studio's portfolio: deep ink-black and warm stone, thin gold highlights, cinematic soft light, photorealistic or refined 3D render. No text, no letters, no logos, no watermarks.",
+  "jobs": [
+    { "file": "hero", "shape": "landscape", "prompt": "A cinematic dark studio desk at night seen from a low angle: a large widescreen monitor displaying an elegant abstract luxury website layout (only abstract shapes and soft gold lines, no readable text), beside it a mechanical keyboard, a notebook with design sketches, a fountain pen and a glass of whisky, warm amber lamp light with deep navy shadows, shallow depth of field." },
+    { "file": "craft", "shape": "landscape", "prompt": "Overhead flat-lay on a dark stone surface of a designer's tools: printed wireframe sketches, colour swatches in muted tones, a gold-tipped pencil, a metal ruler, a small brass compass and a tablet showing an abstract layout without readable text, soft side light." }
+  ],
+  "logo": { "concept": "a minimalist studio emblem: a capital letter L built from one continuous thin line, enclosed in a tilted square diamond outline, precise and elegant" },
+  "icons": {
+    "style": "engraved gold monoline icons with fine hairlines, Art Deco inspired, elegant",
+    "items": [
+      "a browser window with a layout wireframe inside",
+      "a fountain pen nib drawing a curve",
+      "a globe with latitude lines and a small chat bubble",
+      "a stopwatch with a lightning bolt",
+      "a camera lens with an aperture star",
+      "a rising paper-plane trail forming an arrow"
+    ]
+  }
+}

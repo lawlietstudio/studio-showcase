@@ -1,0 +1,112 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import Img from '../../../components/Img.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const H = (p: string) => href('accounting', p, lang);
+const alt = (en: string, zh: string) => (lang === 'zh' ? zh : en);
+---
+<Layout lang={lang} path="/" description={L(C.metaDescription)}>
+  <section class="acc-hero">
+    <div class="container grid-hero">
+      <div>
+        <p class="eyebrow rise d1">{L(C.hero.eyebrow)}</p>
+        <h1 class="rise d2">{L(C.hero.title)}</h1>
+        <p class="lead rise d3">{L(C.hero.lead)}</p>
+        <div class="actions rise d4">
+          <a href={H('/contact/')} class="btn btn-primary">{L(C.cta)}<span class="arr" aria-hidden="true"></span></a>
+          <a href={H('/services/')} class="btn btn-ghost">{L(C.hero.secondary)}</a>
+        </div>
+      </div>
+      <div class="hero-visual rise d3">
+        <div class="photo"><Img src={photo('accounting', 'hero')} alt={alt('Two people reviewing a printed financial report', '兩人正在審閱列印的財務報告')} sizes="(min-width: 960px) 520px, 100vw" widths={[600, 900, 1200]} eager /></div>
+        <aside class="float-card" aria-hidden="true">
+          <header><span>{L(C.hero.widgetTitle)}</span><span class="pill">{L(C.hero.widgetStatus)}</span></header>
+          <ul><li>{L(C.hero.widgetLine1)}</li><li>{L(C.hero.widgetLine2)}</li><li>{L(C.hero.widgetLine3)}</li></ul>
+          <div class="bar"><i></i></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-band">
+    <div class="container">
+      <dl class="stats" style="--cols:4">
+        {C.stats.map((s) => <div class="reveal"><dt>{s.n}{s.suffix ?? ''}</dt><dd>{L(s.t)}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head center reveal">
+        <p class="eyebrow">{L({ en: 'Services', zh: '服務' })}</p>
+        <h2>{L(C.servicesTitle)}</h2>
+        <p>{L(C.servicesLead)}</p>
+      </header>
+      <div class="grid cols-3">
+        {C.services.map((s, i) => (
+          <a class="svc-card reveal" href={`${H('/services/')}#${s.id}`}>
+            <span class="ico-wrap"><Ico src={icon('accounting', i + 1)} /></span>
+            <h3>{L(s.name)}</h3>
+            <p>{L(s.short)}</p>
+            <span class="link-arrow">{L({ en: 'Learn more', zh: '了解更多' })}<span class="arr" aria-hidden="true"></span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container split">
+      <div class="split-img reveal" style="border-radius:32px"><Img src={photo('accounting', 'workspace')} alt={alt('A tidy desk with a laptop, calculator and notebook of figures', '整齊的桌面：手提電腦、計算機及寫滿數字的筆記本')} sizes="(min-width: 960px) 560px, 100vw" widths={[600, 900, 1200]} /></div>
+      <div class="reveal">
+        <p class="eyebrow">{L({ en: 'Why us', zh: '為何選擇我們' })}</p>
+        <h2>{L(C.whyTitle)}</h2>
+        <ul class="feats" style="margin-top:1.6rem">
+          {C.why.map((w, i) => (
+            <li><span class="num" style="font-family:var(--font-mono);font-size:1.1rem">0{i + 1}</span><div><h3>{L(w.title)}</h3><p>{L(w.text)}</p></div></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L({ en: 'Process', zh: '流程' })}</p><h2>{L(C.processTitle)}</h2></header>
+      <ol class="process">
+        {C.process.map((p, i) => <li class="reveal"><span class="no">0{i + 1}</span><h3>{L(p.title)}</h3><p>{L(p.text)}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head center reveal"><h2>{L(C.industriesTitle)}</h2></header>
+      <div class="chips reveal">{C.industries.map((i) => <span class="chip">{L(i)}</span>)}</div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L({ en: 'Team', zh: '團隊' })}</p><h2>{L(C.teamTitle)}</h2></header>
+      <div class="grid cols-3">
+        {C.team.map((m) => (
+          <article class="card team-card reveal">
+            <div class="card-img"><Img src={photo('accounting', m.image)} alt={m.name} sizes="(min-width: 960px) 380px, 100vw" widths={[480, 800]} /></div>
+            <div class="card-body"><h3>{m.name}</h3><p class="role">{L(m.role)}</p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</Layout>

@@ -1,0 +1,109 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import Img from '../../../components/Img.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const H = (p: string) => href('law', p, lang);
+const alt = (en: string, zh: string) => (lang === 'zh' ? zh : en);
+---
+<Layout lang={lang} path="/" description={L(C.metaDescription)}>
+  <section class="law-hero">
+    <Img class="hero-img" src={photo('law', 'hero')} alt={alt('A neoclassical stone colonnade at dusk', '黃昏時分的新古典石柱廊')} widths={[800, 1200, 1600, 1920]} eager />
+    <div class="container">
+      <p class="eyebrow rise d1">{L(C.hero.eyebrow)}</p>
+      <h1 class="rise d2">{L(C.hero.title)}</h1>
+      <p class="lead rise d3">{L(C.hero.lead)}</p>
+      <div class="actions rise d4">
+        <a href={H('/contact/')} class="btn btn-primary">{L(C.cta)}<span class="arr" aria-hidden="true"></span></a>
+        <a href={H('/practice/')} class="btn btn-light">{L(C.hero.seePractice)}</a>
+      </div>
+      <dl class="stats rise d4" style="--cols:4">
+        {C.stats.map((s) => <div><dt>{s.n}{s.suffix ?? ''}</dt><dd>{L(s.t)}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="intro-body reveal">
+        <p class="eyebrow">{L(C.intro.eyebrow)}</p>
+        <h2>{L(C.intro.title)}</h2>
+        <div style="margin-top:1.6rem">{C.intro.body.map((p) => <p>{L(p)}</p>)}</div>
+        <a href={H('/attorneys/')} class="link-arrow" style="margin-top:1rem">{L(C.intro.link)}<span class="arr" aria-hidden="true"></span></a>
+      </div>
+      <figure class="frame reveal">
+        <Img src={photo('law', 'lobby')} alt={alt('The firm’s marble reception hall', '事務所的大理石接待大堂')} sizes="(min-width: 960px) 520px, 100vw" widths={[480, 800, 1100]} />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="container">
+      <header class="sec-head center reveal">
+        <p class="eyebrow">{L({ en: 'Practice areas', zh: '業務範疇' })}</p>
+        <h2>{L(C.practiceTitle)}</h2>
+        <p>{L(C.practiceLead)}</p>
+      </header>
+      <div class="areas">
+        {C.areas.map((a, i) => (
+          <a class="area reveal" href={`${H('/practice/')}#${a.id}`}>
+            <Ico src={icon('law', i + 1)} />
+            <h3>{L(a.name)}</h3>
+            <p>{L(a.short)}</p>
+            <span class="link-arrow">{L({ en: 'Learn more', zh: '了解更多' })}<span class="arr" aria-hidden="true"></span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head center reveal">
+        <p class="eyebrow">{L({ en: 'Attorneys', zh: '律師' })}</p>
+        <h2>{L(C.attorneysTitle)}</h2>
+      </header>
+      <div class="grid cols-4">
+        {C.attorneys.map((a) => (
+          <article class="card atty reveal">
+            <a href={H('/attorneys/')}>
+              <div class="card-img"><Img src={photo('law', a.image)} alt={a.name} sizes="(min-width: 960px) 280px, 50vw" widths={[400, 700]} /></div>
+              <div class="card-body"><h3>{a.name}</h3><p class="role">{L(a.role)}</p></div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal">
+        <p class="eyebrow">{L(C.insightsTitle)}</p>
+        <h2>{L({ en: 'Recent thinking', zh: '最新文章' })}</h2>
+      </header>
+      <div class="grid cols-3">
+        {C.articles.slice(0, 3).map((a) => (
+          <article class="card post reveal">
+            <a href={H(`/insights/${a.slug}/`)}>
+              <div class="card-img"><Img src={photo('law', a.image)} alt="" sizes="(min-width: 960px) 380px, 100vw" widths={[480, 800]} /></div>
+              <div class="card-body">
+                <p class="meta"><span>{L(a.area)}</span><span>{a.date}</span></p>
+                <h3>{L(a.title)}</h3>
+                <p>{L(a.excerpt)}</p>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</Layout>

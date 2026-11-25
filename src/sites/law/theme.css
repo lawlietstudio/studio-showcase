@@ -1,0 +1,101 @@
+/* Aldridge & Wren LLP: classical, authoritative. Ivory paper, deep green-black, brass; a large light serif. */
+.law {
+  --bg: #f6f2ea; --bg-alt: #ece6d9; --bg-dark: #0c1714;
+  --fg: #16201d; --fg-muted: #5b6560; --fg-dark: #f1ede2; --fg-dark-muted: rgb(241 237 226 / 0.74);
+  --line: rgb(22 32 29 / 0.16); --line-dark: rgb(241 237 226 / 0.2);
+  --accent: #a8864a; --accent-ink: #14100a; --accent-2: #8c6d35;
+  --radius: 0px; --radius-btn: 0px;
+  --font-display: 'Cormorant Garamond', 'Noto Serif TC', Georgia, serif;
+  --font-body: 'Inter Variable', 'Noto Sans TC', system-ui, sans-serif;
+  --h1: clamp(3.1rem, 7.4vw, 6.4rem); --h2: clamp(2.4rem, 4.8vw, 4.2rem); --h3: 1.8rem;
+  --header-solid: rgb(246 242 234 / 0.97);
+  font-size: 1.02rem;
+}
+.law h1, .law h2, .law h3 { font-weight: 500; }
+.law .hdr-stack .brand { font-size: 1.55rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.law .hd-nav a { font-size: 0.7rem; letter-spacing: 0.22em; }
+.law .btn-primary { background: var(--accent); }
+.law .btn-ghost:hover { background: var(--bg-dark); border-color: var(--bg-dark); }
+
+/* hero */
+.law-hero { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; min-height: max(100svh, 44rem); padding-top: calc(var(--header-h) + 5rem); text-align: center; color: var(--fg-dark); background: var(--bg-dark); overflow: hidden; }
+.law-hero .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.law-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(8 14 12 / 0.6), rgb(8 14 12 / 0.32) 38%, rgb(8 14 12 / 0.9)); }
+.law-hero h1 { max-width: 15ch; margin: 0 auto; line-height: 1; text-wrap: balance; }
+.law-hero .lead { max-width: 50ch; margin: 1.7rem auto 2.5rem; font-size: 1.14rem; color: var(--fg-dark-muted); }
+.law-hero .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.law-hero .stats { margin-top: clamp(3rem, 7vw, 5rem); border-top: 1px solid var(--line-dark); }
+.law-hero .stats > div { padding: 1.7rem 1rem 2.1rem; text-align: center; border-color: var(--line-dark); }
+.law-hero .stats dt { color: #fff; } .law-hero .stats dd { color: rgb(241 237 226 / 0.66); }
+.law-hero .eyebrow { justify-content: center; } .law-hero .eyebrow::after { content: ''; width: 2.2rem; height: 1px; background: currentColor; opacity: 0.8; }
+.rise { opacity: 0; transform: translateY(20px); animation: rise 1.1s var(--ease) forwards; }
+.rise.d1 { animation-delay: 0.1s; } .rise.d2 { animation-delay: 0.3s; } .rise.d3 { animation-delay: 0.5s; } .rise.d4 { animation-delay: 0.7s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.calm .rise { animation: none; opacity: 1; transform: none; }
+
+/* framed photograph with a brass keyline */
+.frame { position: relative; margin: 0; }
+.frame::before { content: ''; position: absolute; inset: -14px 14px 14px -14px; border: 1px solid var(--accent); opacity: 0.6; pointer-events: none; }
+.frame img { position: relative; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.law .intro-body p { color: var(--fg-muted); font-size: 1.08rem; }
+
+/* practice areas */
+.areas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-dark); border-left: 1px solid var(--line-dark); }
+.area { display: flex; flex-direction: column; gap: 1rem; padding: clamp(1.8rem, 3vw, 2.8rem); border-right: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); transition: background-color 0.5s; }
+.area:hover { background: rgb(241 237 226 / 0.05); }
+.area .ico { --ico-color: var(--accent); --s: 62px; }
+.area h3 { font-size: 1.9rem; } .area p { margin: 0; flex: 1; color: var(--fg-dark-muted); }
+
+/* attorneys */
+.atty .card-img { --ratio: 4 / 5; }
+.atty .card-img img { filter: grayscale(0.4) contrast(1.02); transition: filter 0.8s, transform 1.4s var(--ease); }
+.atty:hover .card-img img { filter: none; }
+.atty .role { margin: 0; font: 600 0.7rem/1.5 var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-2); }
+.atty-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; padding: clamp(2.5rem, 5vw, 4rem) 0; border-top: 1px solid var(--line); }
+.atty-row:nth-child(even) .card-img { order: 2; }
+.atty-row .card-img { --ratio: 4 / 5; max-width: 26rem; }
+.atty-row h2 { font-size: clamp(2rem, 3.4vw, 3rem); }
+.atty-row ul { margin-top: 1.4rem; }
+.atty-row li { position: relative; padding: 0.55rem 0 0.55rem 1.4rem; border-top: 1px solid var(--line); color: var(--fg-muted); }
+.atty-row li::before { content: ''; position: absolute; left: 0.1rem; top: 50%; width: 6px; height: 6px; border: 1px solid var(--accent); transform: translateY(-50%) rotate(45deg); }
+
+/* practice detail */
+.area-detail { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; padding: clamp(3rem, 6vw, 5rem) 0; border-top: 1px solid var(--line); }
+.area-detail:nth-child(even) .copy { order: 2; }
+.area-detail .ico { --ico-color: var(--accent); --s: 68px; margin-bottom: 1.2rem; }
+.area-detail h2 { font-size: clamp(2.1rem, 3.6vw, 3.1rem); } .area-detail .short { margin: 1rem 0 1.6rem; font-size: 1.1rem; color: var(--fg-muted); }
+.area-detail li { position: relative; padding: 0.6rem 0 0.6rem 1.5rem; border-top: 1px solid var(--line); }
+.area-detail li:last-child { border-bottom: 1px solid var(--line); }
+.area-detail li::before { content: ''; position: absolute; left: 0.1rem; top: 50%; width: 6px; height: 6px; border: 1px solid var(--accent); transform: translateY(-50%) rotate(45deg); }
+.area-detail .pic img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* insights */
+.post .card-img { --ratio: 3 / 2; }
+.post .meta { display: flex; gap: 1rem; font: 600 0.68rem/1 var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-2); }
+.post h3 { font-size: 1.7rem; }
+.article-meta { margin: 0 0 1.6rem; color: var(--fg-muted); font-size: 0.9rem; letter-spacing: 0.04em; }
+.article p { font-size: 1.14rem; line-height: 1.85; color: #2c3733; }
+.article-meta + p::first-letter { float: left; margin: 0.08em 0.12em 0 0; font: 500 4.6rem/0.8 var(--font-display); color: var(--accent-2); }
+:lang(zh-Hant) .article-meta + p::first-letter { all: unset; }
+
+/* closing band */
+.cta-band { position: relative; isolation: isolate; overflow: hidden; padding: clamp(5rem, 10vw, 8.5rem) 0; text-align: center; color: var(--fg-dark); background: var(--bg-dark); }
+.cta-band .cta-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.cta-band::after { content: ''; position: absolute; inset: 0; z-index: -1; background: rgb(8 14 12 / 0.78); }
+.cta-band h2 { max-width: 18ch; margin: 0 auto; text-wrap: balance; color: #fff; }
+.cta-band p { max-width: 46ch; margin: 1.4rem auto 2.2rem; color: var(--fg-dark-muted); font-size: 1.1rem; }
+.cta-band .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+
+/* contact */
+.contact-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+.info-list li { padding: 1.5rem 0; border-top: 1px solid var(--line); } .info-list li:last-child { border-bottom: 1px solid var(--line); }
+.info-list h3 { margin-bottom: 0.5rem; font: 600 0.68rem/1 var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-2); }
+.info-list p { margin: 0; font: 500 1.5rem/1.35 var(--font-display); }
+.info-list a:hover { color: var(--accent-2); }
+
+@media (max-width: 960px) {
+  .areas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .atty-row, .area-detail, .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  .atty-row:nth-child(even) .card-img, .area-detail:nth-child(even) .copy { order: 0; }
+}
+@media (max-width: 640px) { .areas { grid-template-columns: minmax(0, 1fr); } .law-hero .stats > div { padding: 1.2rem 0.6rem; } }

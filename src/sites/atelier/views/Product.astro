@@ -1,0 +1,36 @@
+---
+import Layout from '../Layout.astro';
+import ProductCard from '../ProductCard.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const L = (v: any) => t(v, lang);
+const p = C.products.find((x) => x.slug === slug)!;
+const cat = C.categories.find((c) => c.id === p.cat)!;
+const related = C.products.filter((x) => x.slug !== slug && x.cat === p.cat).concat(C.products.filter((x) => x.slug !== slug && x.cat !== p.cat)).slice(0, 4);
+---
+<Layout lang={lang} path={`/shop/${p.slug}/`} title={L(p.name)} description={L(p.short)}>
+  <section class="section tight" style="padding-top:0">
+    <div class="container pdp">
+      <div class="pic reveal"><Img src={photo('atelier', p.image)} alt={L(p.name)} sizes="(min-width: 960px) 600px, 100vw" widths={[600, 900, 1200]} eager /></div>
+      <div class="reveal">
+        <p class="crumbs"><a href={href('atelier', '/shop/', lang)}>{L(C.shop.title)}</a> / {L(cat.name)}</p>
+        <h1>{L(p.name)}</h1>
+        <p class="price">${p.price}</p>
+        <p class="desc">{L(p.desc)}</p>
+        <ul>{p.details.map((d) => <li>{L(d)}</li>)}</ul>
+        <button type="button" class="btn btn-add" data-add={p.slug} data-added={L(C.shop.added)} style="max-width:22rem"><span data-label>{L(C.shop.add)}</span></button>
+        <p style="margin-top:1.4rem"><a href={href('atelier', '/cart/', lang)} class="link-arrow">{L(C.shop.viewCart)}<span class="arr" aria-hidden="true"></span></a></p>
+      </div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head reveal"><h2>{L(C.shop.related)}</h2></header>
+      <div class="grid cols-4">{related.map((x) => <ProductCard p={x} lang={lang} />)}</div>
+    </div>
+  </section>
+</Layout>

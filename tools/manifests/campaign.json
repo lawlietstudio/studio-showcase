@@ -1,0 +1,27 @@
+{
+  "site": "campaign",
+  "art": "Warm, hopeful documentary campaign photography for a fictional city-council candidate: golden-hour sunlight, natural candid moments, natural saturated colour, shallow depth of field, photorealistic. All people are fictional. No readable text, no letters, no logos, no political party symbols, no real flags or emblems, no watermarks.",
+  "jobs": [
+    { "file": "portrait", "shape": "portrait", "prompt": "Portrait of a confident woman in her early 40s with shoulder-length brown hair, navy blazer with the sleeves pushed up, smiling warmly at the camera, waist-up, standing on a tree-lined residential street at golden hour with soft bokeh behind. Fictional person." },
+    { "file": "hero", "shape": "landscape", "prompt": "A woman with shoulder-length brown hair in a navy blazer talking with a small group of neighbours on a sunny residential street, seen from a low angle, golden-hour backlight, candid and warm, people mid-conversation and smiling." },
+    { "file": "townhall", "shape": "landscape", "prompt": "A community town-hall meeting in a warm wooden hall: rows of residents seated listening, seen from behind the audience toward a small raised stage with a microphone stand and a banner with no text, warm evening light through tall windows." },
+    { "file": "park", "shape": "landscape", "prompt": "Families and children playing in a neighbourhood park with a new wooden playground at golden hour, long warm shadows, mature trees, candid joyful moments." },
+    { "file": "transit", "shape": "landscape", "prompt": "A modern streetcar arriving at a tram stop on a city street at dawn, commuters waiting on the platform with coffee cups (no clear faces), soft pink and gold sky, wet pavement reflections." },
+    { "file": "smallbiz", "shape": "landscape", "prompt": "A small family-owned bakery storefront on a main street in warm morning light, loaves arranged in the window, an open-sign without readable text, the owner in an apron arranging bread inside (no clear face)." },
+    { "file": "library", "shape": "landscape", "prompt": "A bright public library children's reading corner with colourful low shelves, bean bags and a large window, a few children reading (no clear faces), warm natural light." },
+    { "file": "housing", "shape": "landscape", "prompt": "New mid-rise apartments and townhouses under construction at sunrise with two tower cranes, a human-scale street with trees in the foreground, hopeful warm light." },
+    { "file": "listening", "shape": "landscape", "prompt": "A woman in a navy blazer listening attentively to an elderly neighbour on a front porch, seen from the side at a distance so faces are small, warm afternoon light, a hanging basket of flowers." }
+  ],
+  "logo": { "concept": "an abstract civic emblem for a river-city campaign: a rising sun above two gentle flowing river lines with a simple arched bridge, bold clean shapes, poster style" },
+  "icons": {
+    "style": "bold solid civic pictogram glyphs, filled shapes with a few cut-out details, like public-signage icons, flat and highly legible",
+    "items": [
+      "a row of three houses of different heights",
+      "a streetcar seen from the front",
+      "a shield with a heart inside",
+      "a tree with a round canopy and a park bench",
+      "a small shop front with a striped awning",
+      "an open book beneath a graduation cap"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+---
+import Layout from '../Layout.astro';
+import ProductCard from '../ProductCard.astro';
+import PageHead from '../../../components/PageHead.astro';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/shop/" title={L(C.shop.title)} description={L(C.shop.lead)}>
+  <PageHead title={L(C.shop.title)} lead={L(C.shop.lead)} eyebrow={L(C.nav[1].label)} plain />
+  <section class="section tight">
+    <div class="container">
+      <div class="filters" role="group" aria-label={L({ en: 'Filter products', zh: '篩選商品' })}>
+        <button type="button" class="filter is-on" data-filter="all">{L(C.shop.all)}</button>
+        {C.categories.map((c) => <button type="button" class="filter" data-filter={c.id}>{L(c.name)}</button>)}
+      </div>
+      <div class="grid cols-4" data-grid>{C.products.map((p) => <ProductCard p={p} lang={lang} />)}</div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-grid] [data-cat]');
+  const apply = (id: string) => {
+    chips.forEach((c) => c.classList.toggle('is-on', c.dataset.filter === id));
+    cards.forEach((card) => { card.hidden = id !== 'all' && card.dataset.cat !== id; });
+  };
+  chips.forEach((c) => c.addEventListener('click', () => { apply(c.dataset.filter!); history.replaceState(null, '', c.dataset.filter === 'all' ? location.pathname : `#${c.dataset.filter}`); }));
+  const start = location.hash.slice(1);
+  if (start && [...chips].some((c) => c.dataset.filter === start)) apply(start);
+</script>

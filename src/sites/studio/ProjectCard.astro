@@ -1,0 +1,22 @@
+---
+import Img from '../../components/Img.astro';
+import { photo } from '../../lib/assets';
+import { href, t, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+const { p, lang } = Astro.props as { p: (typeof C.projects)[number]; lang: Lang };
+const live = (p as any).external ?? href(p.id, '/', lang);
+const external = Boolean((p as any).external);
+---
+<article class="card work-card reveal">
+  <a href={href('', `/work/${p.id}/`, lang)} aria-label={p.name}>
+    <div class="card-img"><Img src={photo('studio', p.image)} alt="" sizes="(min-width: 960px) 400px, 100vw" widths={[500, 800, 1200]} /></div>
+  </a>
+  <p class="kind">{t(p.kind, lang)}</p>
+  <h3>{p.name}</h3>
+  <p>{t(p.summary, lang)}</p>
+  <div class="links">
+    <a class="link-arrow" href={live} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>{t(C.visit, lang)}<span class="arr" aria-hidden="true"></span></a>
+    <a class="link-arrow" style="color:var(--fg-muted)" href={href('', `/work/${p.id}/`, lang)}>{t(C.caseStudy, lang)}</a>
+  </div>
+</article>

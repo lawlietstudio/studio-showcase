@@ -1,0 +1,23 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import { photo } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const L = (v: any) => t(v, lang);
+const a = C.articles.find((x) => x.slug === slug)!;
+---
+<Layout lang={lang} path={`/insights/${a.slug}/`} title={L(a.title)} description={L(a.excerpt)}>
+  <PageHead title={L(a.title)} eyebrow={L(a.area)} image={photo('law', a.image)} />
+  <section class="section">
+    <div class="container prose article">
+      <p class="article-meta">{L(C.strings.by)} {a.author} · {a.date}</p>
+      {a.body.map((p) => <p>{L(p)}</p>)}
+      <p style="margin-top:2.4rem"><a href={href('law', '/insights/', lang)} class="link-arrow">{L(C.strings.back)}<span class="arr" aria-hidden="true"></span></a></p>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

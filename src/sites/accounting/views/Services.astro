@@ -1,0 +1,48 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/services/" title={L(C.nav[1].label)} description={L(C.servicesLead)}>
+  <PageHead title={L(C.servicesTitle)} lead={L(C.servicesLead)} eyebrow={L(C.nav[1].label)} image={photo('accounting', 'meeting')} />
+  <section class="section">
+    <div class="container">
+      {C.services.map((s, i) => (
+        <article class="svc-detail reveal" id={s.id}>
+          <div>
+            <span class="ico-wrap"><Ico src={icon('accounting', i + 1)} /></span>
+            <h2 style="font-size:2rem">{L(s.name)}</h2>
+            <p style="margin-top:0.8rem;color:var(--fg-muted)">{L(s.short)}</p>
+          </div>
+          <ul>{s.points.map((p) => <li>{L(p)}</li>)}</ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L({ en: 'Pricing', zh: '收費' })}</p><h2>{L(C.packagesTitle)}</h2></header>
+      <div class="packages">
+        {C.packages.map((p) => (
+          <article class:list={['pkg reveal', { featured: p.featured }]}>
+            {p.featured && <span class="tagline-pill">{L(C.strings.popular)}</span>}
+            <h3>{L(p.name)}</h3>
+            <p class="price"><strong>${p.price}</strong><span>{L(p.per)}</span></p>
+            <ul>{p.points.map((x) => <li>{L(x)}</li>)}</ul>
+            <a href={href('accounting', '/contact/', lang)} class:list={['btn', p.featured ? 'btn-primary' : 'btn-ghost']} style={p.featured ? 'background:#6fd3b6;border-color:#6fd3b6;color:#06382d' : ''}>{L(C.cta)}</a>
+          </article>
+        ))}
+      </div>
+      <p class="note">{L(C.packagesNote)}</p>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

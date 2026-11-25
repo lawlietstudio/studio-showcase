@@ -1,0 +1,32 @@
+---
+import Layout from '../Layout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import { photo } from '../../../lib/assets';
+import { t, telHref, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const I = C.involved;
+---
+<Layout lang={lang} path="/get-involved/" title={L(I.title)} description={L(I.lead)}>
+  <PageHead title={L(I.title)} lead={L(I.lead)} eyebrow={L(C.nav[4].label)} image={photo('campaign', 'park')} />
+  <section class="section">
+    <div class="container">
+      <div class="grid cols-3">
+        {I.cards.map((c) => <article class="inv-card reveal"><h3>{L(c.title)}</h3><p>{L(c.text)}</p></article>)}
+      </div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <h2>{L(I.amountsTitle)}</h2>
+        <div class="amounts">{I.amounts.map((a) => <a class="amount" href="#sign-up">{a}</a>)}</div>
+        <p style="margin-top:2rem;color:var(--fg-muted)">{L(C.address)}<br /><a href={telHref(C.phone)}>{C.phone}</a> · <a href={`mailto:${C.email}`}>{C.email}</a></p>
+      </div>
+      <div id="sign-up"><ContactForm lang={lang} email={C.email} form={I.form} topics={I.topics} topicLabel={I.form.topic} /></div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,26 @@
+{
+  "site": "accounting",
+  "art": "Bright, modern corporate photography for an accounting and advisory firm: airy natural daylight, clean white and light-oak surfaces with emerald-teal accents, crisp lines, real-world candid realism, shallow depth of field, photorealistic. No text, no letters, no logos, no watermarks. Screens show abstract coloured charts only, never readable words. Paper reports are filled with printed tables and charts.",
+  "jobs": [
+    { "file": "hero", "shape": "landscape", "prompt": "A modern open-plan accounting office in bright daylight with large windows; in the foreground two people's hands (no faces) review a printed financial report full of coloured charts and tables on a light oak table, a laptop beside it showing an abstract dashboard." },
+    { "file": "meeting", "shape": "landscape", "prompt": "Three colleagues seen from behind and from the side (no clear faces) discussing documents around a table in a glass-walled meeting room, a whiteboard with abstract diagrams, soft morning light." },
+    { "file": "workspace", "shape": "landscape", "prompt": "A tidy desk seen from above-front: a laptop with an abstract chart on screen, a desktop calculator, a cup of coffee, a notebook with neat handwritten columns of figures, a small potted plant, soft morning light." },
+    { "file": "skyline", "shape": "landscape", "prompt": "A modern financial district skyline of glass towers in clear morning light, seen from a quiet tree-lined plaza, soft reflections, calm and optimistic." },
+    { "file": "abstract", "shape": "landscape", "prompt": "Minimal 3D render of translucent emerald-green glass bars forming an ascending bar chart on a clean white surface, soft shadows, a thin teal line graph floating above them, studio lighting, very clean." },
+    { "file": "portrait-1", "shape": "portrait", "prompt": "Editorial head-and-shoulders portrait of a woman in her mid 40s with a short dark bob, teal blazer over a white top, in a bright modern office with soft blurred windows, warm professional smile, looking at the camera. Fictional person." },
+    { "file": "portrait-2", "shape": "portrait", "prompt": "Editorial head-and-shoulders portrait of a man in his early 50s with short grey hair and rectangular glasses, navy suit and open-collar shirt, in a bright modern office, calm friendly expression, looking at the camera. Fictional person." },
+    { "file": "portrait-3", "shape": "portrait", "prompt": "Editorial head-and-shoulders portrait of a woman in her early 30s of Chinese descent, long dark hair, light grey blazer, in a bright modern office, approachable confident smile, looking at the camera. Fictional person." }
+  ],
+  "logo": { "concept": "an abstract accounting-firm emblem: four rising rounded vertical bars of increasing height inside a thin circle, the tallest bar crossing the circle line, clean geometric modern style" },
+  "icons": {
+    "style": "clean modern geometric line icons with uniform 2px-equivalent strokes, rounded caps and joins, simple and friendly",
+    "items": [
+      "a tax form with a percent sign and a check mark",
+      "a magnifying glass over a ledger page with rows",
+      "an open bookkeeping ledger book with a pencil",
+      "a wallet with coins stacked beside it",
+      "a compass whose needle points up and right over a rising arrow",
+      "a small office building connected to a pie chart"
+    ]
+  }
+}

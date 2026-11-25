@@ -1,0 +1,27 @@
+{
+  "site": "author",
+  "art": "Literary, atmospheric photography and painterly artwork for a novelist's website: soft overcast and lamp light, muted earthy colours (sage, ochre, slate, cream), natural film grain, photorealistic unless stated. No text, no letters, no logos, no watermarks. Any manuscript or book pages are filled with realistic small text or handwriting.",
+  "jobs": [
+    { "file": "portrait", "shape": "portrait", "prompt": "Editorial portrait of a woman in her early 50s with grey-brown hair loosely pinned up, an olive cardigan and reading glasses on a chain, sitting in a book-lined study beside a window with soft overcast light, a gentle thoughtful expression, looking at the camera. Fictional person." },
+    { "file": "desk", "shape": "landscape", "prompt": "A writer's wooden desk by a rain-streaked window: a vintage typewriter with a page in it filled with typed text, a stack of manuscript pages, a cup of tea, a small lamp, a pair of glasses, grey light outside." },
+    { "file": "reading", "shape": "landscape", "prompt": "An author giving a reading in an independent bookshop, seen from the back of the audience so no faces are clear: a woman at a small lectern holding a book, rows of listeners, warm lamps, shelves of books all around." },
+    { "file": "shelves", "shape": "landscape", "prompt": "A wall of floor-to-ceiling bookshelves in a warm old library with a ladder and a leather armchair, dust motes in a shaft of afternoon light, rich cosy tones." },
+    { "file": "manuscript", "shape": "landscape", "prompt": "Close-up of manuscript pages covered in typed text with handwritten edits in red pen, margin notes and arrows, paper clips, a pencil, soft side light, shallow depth of field." },
+    { "file": "cover-salt-road", "shape": "portrait", "prompt": "Painterly book-cover artwork, portrait 2:3: a long empty road crossing pale salt flats toward a low sun at dusk, vast sky in muted lilac and ochre, lots of empty sky at the top for a title. Absolutely no text or letters." },
+    { "file": "cover-lighthouse", "shape": "portrait", "prompt": "Painterly book-cover artwork, portrait 2:3: a lone white lighthouse on dark rocks in thick sea fog, its beam a faint warm glow, muted slate-blue and cream palette, empty space at the top for a title. Absolutely no text or letters." },
+    { "file": "cover-weather", "shape": "portrait", "prompt": "Painterly book-cover artwork, portrait 2:3: rain on a kitchen window with a blurred green garden and a single yellow teacup on the sill, soft grey-green palette, empty space at the top for a title. Absolutely no text or letters." },
+    { "file": "cover-orchard", "shape": "portrait", "prompt": "Painterly book-cover artwork, portrait 2:3: an orchard in autumn light with rows of apple trees, a single wooden ladder leaning in one tree, warm ochre and sage palette, empty sky at the top for a title. Absolutely no text or letters." }
+  ],
+  "logo": { "concept": "an abstract author's emblem: an open book whose two pages sweep upward into the wings of a small bird, thin elegant single-line drawing" },
+  "icons": {
+    "style": "fine pen-and-ink engraving vignettes with delicate hatching, literary and refined",
+    "items": [
+      "an open book",
+      "a fountain pen nib",
+      "a sealed letter with an envelope flap",
+      "a tear-off desk calendar",
+      "a vintage microphone on a stand",
+      "a steaming teacup on a saucer"
+    ]
+  }
+}

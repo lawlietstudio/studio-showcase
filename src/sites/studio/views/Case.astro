@@ -1,0 +1,43 @@
+---
+import Layout from '../Layout.astro';
+import CtaBlock from '../CtaBlock.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang, id } = Astro.props as { lang: Lang; id: string };
+const L = (v: any) => t(v, lang);
+const i = C.projects.findIndex((p) => p.id === id);
+const p = C.projects[i];
+const next = C.projects[(i + 1) % C.projects.length];
+const live = (p as any).external ?? href(p.id, '/', lang);
+const external = Boolean((p as any).external);
+---
+<Layout lang={lang} path={`/work/${p.id}/`} title={p.name} description={L(p.summary)}>
+  <PageHead title={p.name} lead={L(p.summary)} eyebrow={`${L(C.caseStudy)} · ${L(p.kind)}`} image={photo('studio', p.image)}>
+    <div style="margin-top:2rem"><a class="btn btn-primary" href={live} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>{L(C.visit)}<span class="arr" aria-hidden="true"></span></a></div>
+  </PageHead>
+  <section class="section">
+    <div class="container split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">{L(C.strings.brief)}</p>
+        <h2 style="font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:1.4rem">{L(p.brief)}</h2>
+        <h3 style="margin:2.4rem 0 1rem;font-size:1.5rem">{L(C.strings.built)}</h3>
+        <ul class="tools">{p.features.map((f) => <li>{L(f)}</li>)}</ul>
+      </div>
+      <aside class="panel reveal">
+        <h3>{L(C.strings.palette)}</h3>
+        <div class="swatches">{p.palette.map((c) => <span class="swatch" style={`background:${c};color:${c === '#f6f2ea' || c === '#f8faf8' || c === '#fff8ee' || c === '#f3ede0' || c === '#f4eee2' || c === '#f3eee7' ? '#111' : '#fff'}`}>{c}</span>)}</div>
+        <h3>{L(C.strings.typefaces)}</h3><p>{p.type}</p>
+        <h3>{L(C.strings.pagesLabel)}</h3><p>{p.pages} × 2</p>
+      </aside>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="container"><div class="case-shot reveal"><Img src={photo('studio', p.image)} alt={p.name} sizes="100vw" widths={[800, 1200, 1800]} /></div></div>
+  </section>
+  <a class="next" href={href('', `/work/${next.id}/`, lang)}><small>{L(C.strings.next)}</small><strong>{next.name}</strong></a>
+  <CtaBlock lang={lang} />
+</Layout>

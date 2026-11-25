@@ -1,0 +1,37 @@
+---
+import Layout from '../Layout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/resources/" title={L(C.resourcesTitle)} description={L(C.resourcesLead)}>
+  <PageHead title={L(C.resourcesTitle)} lead={L(C.resourcesLead)} image={photo('accounting', 'workspace')} />
+  <section class="section">
+    <div class="container">
+      <div class="grid cols-3">
+        {C.articles.map((a) => (
+          <article class="card post reveal">
+            <a href={href('accounting', `/resources/${a.slug}/`, lang)}>
+              <div class="card-img"><Img src={photo('accounting', a.image)} alt="" sizes="(min-width: 960px) 380px, 100vw" widths={[480, 800]} /></div>
+              <div class="card-body"><span class="tagline">{L(a.tag)} · {a.date}</span><h3>{L(a.title)}</h3><p>{L(a.excerpt)}</p><span class="link-arrow">{L(C.strings.read)}<span class="arr" aria-hidden="true"></span></span></div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container" style="max-width:56rem">
+      <header class="sec-head reveal"><h2>{L(C.calendarTitle)}</h2></header>
+      <table class="cal reveal">
+        <thead><tr><th>{L(C.strings.date)}</th><th>{L(C.strings.deadline)}</th></tr></thead>
+        <tbody>{C.calendar.map((r) => <tr><td>{L(r.date)}</td><td>{L(r.what)}</td></tr>)}</tbody>
+      </table>
+    </div>
+  </section>
+</Layout>

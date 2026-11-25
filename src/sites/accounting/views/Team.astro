@@ -1,0 +1,28 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/team/" title={L(C.nav[2].label)} description={L(C.teamLead)}>
+  <PageHead title={L(C.teamTitle)} lead={L(C.teamLead)} eyebrow={L(C.nav[2].label)} image={photo('accounting', 'skyline')} />
+  <section class="section">
+    <div class="container">
+      <div class="grid cols-3">
+        {C.team.map((m) => (
+          <article class="card team-card reveal">
+            <div class="card-img"><Img src={photo('accounting', m.image)} alt={m.name} sizes="(min-width: 960px) 380px, 100vw" widths={[480, 800]} /></div>
+            <div class="card-body"><h3>{m.name}</h3><p class="role">{L(m.role)}</p><p>{L(m.bio)}</p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

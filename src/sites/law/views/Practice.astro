@@ -1,0 +1,33 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/practice/" title={L(C.nav[1].label)} description={L(C.practiceLead)}>
+  <PageHead title={L(C.nav[1].label)} lead={L(C.practiceLead)} eyebrow={L({ en: 'What we do', zh: '我們的工作' })} image={photo('law', 'library')} center />
+  <section class="section">
+    <div class="container">
+      {C.areas.map((a, i) => (
+        <article class="area-detail reveal" id={a.id}>
+          <div class="copy">
+            <Ico src={icon('law', i + 1)} />
+            <h2>{L(a.name)}</h2>
+            <p class="short">{L(a.short)}</p>
+            <h3 style="font-size:1.2rem;margin-bottom:.8rem">{L(C.strings.matters)}</h3>
+            <ul>{a.matters.map((m) => <li>{L(m)}</li>)}</ul>
+          </div>
+          <div class="pic"><Img src={photo('law', a.image)} alt="" sizes="(min-width: 960px) 460px, 100vw" widths={[480, 800, 1100]} /></div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

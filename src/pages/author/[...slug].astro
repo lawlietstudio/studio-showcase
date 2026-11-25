@@ -1,0 +1,9 @@
+---
+import { authorRoutes } from '../../sites/author/routes';
+
+export function getStaticPaths() {
+  return authorRoutes();
+}
+const { View, ...props } = Astro.props;
+---
+<View {...props} />

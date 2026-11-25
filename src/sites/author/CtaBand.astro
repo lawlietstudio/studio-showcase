@@ -1,0 +1,16 @@
+---
+import Img from '../../components/Img.astro';
+import { photo } from '../../lib/assets';
+import { href, t, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+const { lang } = Astro.props as { lang: Lang };
+---
+<section class="cta-band">
+  <Img class="cta-img" src={photo('author', 'shelves')} alt="" widths={[800, 1200, 1600]} />
+  <div class="container reveal">
+    <h2>{t(C.newsletter.title, lang)}</h2>
+    <p>{t(C.newsletter.text, lang)}</p>
+    <div class="actions"><a href={href('author', '/contact/', lang)} class="btn btn-primary">{t(C.cta, lang)}<span class="arr" aria-hidden="true"></span></a></div>
+  </div>
+</section>

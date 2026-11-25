@@ -1,0 +1,19 @@
+---
+import Img from '../../components/Img.astro';
+import { photo } from '../../lib/assets';
+import { href, t, telHref, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+const { lang } = Astro.props as { lang: Lang };
+---
+<section class="cta-band">
+  <Img class="cta-img" src={photo('law', 'library')} alt="" widths={[800, 1200, 1600]} />
+  <div class="container reveal">
+    <h2>{t({ en: 'Speak to a partner about your matter.', zh: '與合夥人談談您的事務。' }, lang)}</h2>
+    <p>{t({ en: 'The first conversation is confidential and carries no obligation.', zh: '首次交談絕對保密，亦毋須承擔任何責任。' }, lang)}</p>
+    <div class="actions">
+      <a href={href('law', '/contact/', lang)} class="btn btn-primary">{t(C.cta, lang)}<span class="arr" aria-hidden="true"></span></a>
+      <a href={telHref(C.phone)} class="btn btn-light">{C.phone}</a>
+    </div>
+  </div>
+</section>

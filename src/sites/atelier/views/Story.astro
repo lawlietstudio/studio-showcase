@@ -1,0 +1,37 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const S = C.story;
+---
+<Layout lang={lang} path="/story/" title={L(C.nav[2].label)} description={L(S.lead)}>
+  <PageHead title={L(S.title)} lead={L(S.lead)} eyebrow={L(C.nav[2].label)} plain />
+  <section class="section">
+    <div class="container split">
+      <div class="reveal"><Img src={photo('atelier', 'studio')} alt={lang === 'zh' ? '日本畫具店內部' : 'Inside the shop'} sizes="(min-width: 960px) 560px, 100vw" widths={[600, 900, 1200]} /></div>
+      <div class="reveal">{S.paragraphs.map((p) => <p style="font-size:1.14rem;color:var(--fg-muted)">{L(p)}</p>)}</div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container"><dl class="stats" style="--cols:3">{S.stats.map((s) => <div class="reveal"><dt>{s.n}</dt><dd>{L(s.t)}</dd></div>)}</dl></div>
+  </section>
+  <section class="section">
+    <div class="container">
+      {C.craft.map((c) => (
+        <div class="craft reveal">
+          <div class="pic"><Img src={photo('atelier', c.image)} alt="" sizes="(min-width: 960px) 560px, 100vw" widths={[600, 900, 1200]} /></div>
+          <div><h3 style="font-size:2rem;margin-bottom:1rem">{L(c.title)}</h3><p>{L(c.text)}</p></div>
+        </div>
+      ))}
+      <blockquote class="story-quote reveal" style="margin-top:2rem"><p>{L(S.quote)}</p><cite>{L(S.quoteWho)}</cite></blockquote>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

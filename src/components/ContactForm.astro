@@ -1,0 +1,62 @@
+---
+// Contact form that composes an email in the visitor's own mail app (no server involved).
+import { t, type Lang, type Rec } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+  email: string;
+  form: Record<string, Rec>;
+  /** Optional drop-down ("Area of law", "Topic", ...): label key `topicLabel` and the options. */
+  topics?: Rec[];
+  topicLabel?: Rec;
+}
+const { lang, email, form: f, topics = [], topicLabel } = Astro.props;
+const L = (v: Rec) => t(v, lang);
+---
+<form class="form reveal" data-contact-form data-mailto={email} action={`mailto:${email}`} method="post" enctype="text/plain">
+  <h2>{L(f.title)}</h2>
+  {f.intro && <p class="form-intro">{L(f.intro)}</p>}
+  <div class="row two">
+    <div class="field"><label for="first-name">{L(f.first)}</label><input id="first-name" name="first-name" autocomplete="given-name" required /></div>
+    <div class="field"><label for="last-name">{L(f.last)}</label><input id="last-name" name="last-name" autocomplete="family-name" /></div>
+  </div>
+  <div class="row two">
+    <div class="field"><label for="email">{L(f.email)}</label><input type="email" id="email" name="email" autocomplete="email" required /></div>
+    <div class="field"><label for="phone">{L(f.phone)}</label><input type="tel" id="phone" name="phone" autocomplete="tel" /></div>
+  </div>
+  {topics.length > 0 && topicLabel && (
+    <div class="row">
+      <div class="field"><label for="topic">{L(topicLabel)}</label>
+        <select id="topic" name="topic">{topics.map((o) => <option value={L(o)}>{L(o)}</option>)}</select>
+      </div>
+    </div>
+  )}
+  <div class="row">
+    <div class="field"><label for="message">{L(f.message)}</label><textarea id="message" name="message" rows="5" required></textarea></div>
+  </div>
+  <label class="consent">
+    <input type="checkbox" name="consent" required />
+    <span class="box" aria-hidden="true"></span>
+    <span>{L(f.consent)}</span>
+  </label>
+  <button type="submit" class="btn btn-primary btn-block">{L(f.submit)}<span class="arr" aria-hidden="true"></span></button>
+  <p class="form-status" role="status" data-success={L(f.success)}></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const mailto = form.dataset.mailto;
+    if (!mailto) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = (n: string) => ((form.elements.namedItem(n) as HTMLInputElement | null)?.value ?? '').trim();
+      const lines = [v('message'), '', `Name: ${v('first-name')} ${v('last-name')}`.trim(), `Email: ${v('email')}`];
+      if (v('phone')) lines.push(`Phone: ${v('phone')}`);
+      if (v('topic')) lines.push(`Topic: ${v('topic')}`);
+      const subject = v('topic') || 'Website enquiry';
+      window.location.href = `mailto:${mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      const status = form.querySelector<HTMLElement>('.form-status');
+      if (status) status.textContent = status.dataset.success ?? '';
+    });
+  });
+</script>

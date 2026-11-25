@@ -1,0 +1,20 @@
+---
+import Img from '../../components/Img.astro';
+import { photo } from '../../lib/assets';
+import { href, t, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+const { p, lang } = Astro.props as { p: (typeof C.products)[number]; lang: Lang };
+const cat = C.categories.find((c) => c.id === p.cat)!;
+---
+<article class="prod reveal" data-cat={p.cat}>
+  <div class="pic">
+    <a href={href('atelier', `/shop/${p.slug}/`, lang)} aria-label={t(p.name, lang)}>
+      <Img src={photo('atelier', p.image)} alt={t(p.name, lang)} sizes="(min-width: 960px) 290px, 50vw" widths={[400, 700, 1000]} />
+    </a>
+    <button type="button" class="btn btn-add add" data-add={p.slug} data-added={t(C.shop.added, lang)}><span data-label>{t(C.shop.add, lang)}</span></button>
+  </div>
+  <p class="cat" style="margin-top:1rem">{t(cat.name, lang)}</p>
+  <h3 style="margin-top:0.4rem"><a href={href('atelier', `/shop/${p.slug}/`, lang)}>{t(p.name, lang)}</a></h3>
+  <p class="price">${p.price}</p>
+</article>

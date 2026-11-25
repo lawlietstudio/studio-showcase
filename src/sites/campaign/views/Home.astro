@@ -1,0 +1,103 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import Img from '../../../components/Img.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const H = (p: string) => href('campaign', p, lang);
+const alt = (en: string, zh: string) => (lang === 'zh' ? zh : en);
+const [first, ...rest] = C.news.slice(0, 4);
+---
+<Layout lang={lang} path="/" description={L(C.metaDescription)}>
+  <section class="cmp-hero">
+    <div class="container wrap">
+      <div class="copy">
+        <p class="eyebrow rise d1" style="color:var(--accent)">{L(C.hero.eyebrow)}</p>
+        <h1 class="rise d2"><span>{L(C.hero.line1)}</span><span class="l2">{L(C.hero.line2)}</span></h1>
+        <p class="lead rise d3">{L(C.hero.lead)}</p>
+        <div class="actions rise d4">
+          <a href={H('/get-involved/')} class="btn btn-primary">{L(C.cta)}<span class="arr" aria-hidden="true"></span></a>
+          <a href={H('/priorities/')} class="btn btn-light">{L(C.nav[1].label)}</a>
+        </div>
+        <span class="badge rise d4">{L(C.hero.election)}</span>
+      </div>
+      <div class="portrait rise d3">
+        <Img src={photo('campaign', 'portrait')} alt={alt('Elena Voss, candidate for Riverside City Council', 'Riverside 市議會候選人 Elena Voss')} sizes="(min-width: 960px) 440px, 90vw" widths={[500, 800, 1100]} eager />
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      {[0, 1].map(() => <ul>{C.ticker.map((x) => <li>{L(x)}</li>)}</ul>)}
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head center reveal">
+        <p class="eyebrow">{L(C.nav[1].label)}</p>
+        <h2>{L(C.prioritiesTitle)}</h2>
+        <p>{L(C.prioritiesLead)}</p>
+      </header>
+      <div class="grid cols-3">
+        {C.priorities.map((p, i) => (
+          <a class="prio reveal" href={`${H('/priorities/')}#${p.id}`}>
+            <Ico src={icon('campaign', i + 1)} />
+            <h3>{L(p.name)}</h3>
+            <p class="big">{L(p.headline)}</p>
+            <p>{L(p.short)}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container split">
+      <div class="pic-round reveal"><Img src={photo('campaign', 'listening')} alt={alt('Elena listening to a neighbour on a porch', 'Elena 在門廊聆聽鄰居說話')} sizes="(min-width: 960px) 540px, 100vw" widths={[600, 900, 1200]} /></div>
+      <div class="reveal">
+        <p class="eyebrow">{L(C.nav[3].label)}</p>
+        <h2>{L(C.about.lead)}</h2>
+        <p style="margin:1.4rem 0 1.8rem;font-size:1.15rem;color:var(--fg-muted)">{L(C.about.story[0])}</p>
+        <a href={H('/about/')} class="btn btn-ghost">{L(C.nav[3].label)}<span class="arr" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head reveal"><p class="eyebrow">{L(C.strings.latest)}</p><h2>{L(C.newsTitle)}</h2></header>
+      <a class="news-feature card news-card reveal" href={H(`/news/${first.slug}/`)}>
+        <div class="card-img"><Img src={photo('campaign', first.image)} alt="" sizes="(min-width: 960px) 700px, 100vw" widths={[600, 1000, 1400]} /></div>
+        <div><p class="meta"><span>{L(first.tag)}</span><span>{first.date}</span></p><h3 style="margin:0.6rem 0 1rem">{L(first.title)}</h3><p style="color:var(--fg-muted);font-size:1.15rem">{L(first.excerpt)}</p><span class="link-arrow">{L(C.strings.read)}<span class="arr" aria-hidden="true"></span></span></div>
+      </a>
+      <div class="grid cols-3">
+        {rest.map((a) => (
+          <a class="card news-card reveal" href={H(`/news/${a.slug}/`)}>
+            <div class="card-img"><Img src={photo('campaign', a.image)} alt="" sizes="(min-width: 960px) 380px, 100vw" widths={[480, 800]} /></div>
+            <div class="card-body"><p class="meta"><span>{L(a.tag)}</span><span>{a.date}</span></p><h3>{L(a.title)}</h3></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L(C.strings.upcoming)}</p><h2>{L(C.eventsTitle)}</h2></header>
+      <div class="grid cols-3">
+        {C.events.map((e) => (
+          <article class="event reveal"><div class="date"><strong>{e.day}</strong><span>{L(e.month)}</span></div><div><h3>{L(e.title)}</h3><p>{L(e.where)}</p></div></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</Layout>

@@ -1,0 +1,78 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import BookCover from '../BookCover.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const H = (p: string) => href('author', p, lang);
+const latest = C.books[0];
+---
+<Layout lang={lang} path="/" description={L(C.metaDescription)}>
+  <section class="au-hero">
+    <div class="container wrap">
+      <div>
+        <p class="eyebrow rise d1">{L(C.hero.eyebrow)}</p>
+        <h1 class="rise d2">{L(C.hero.title)}</h1>
+        <p class="lead rise d3">{L(C.hero.lead)}</p>
+        <div class="actions rise d4">
+          <a href={H(`/books/${latest.slug}/`)} class="btn btn-primary">{L(C.hero.latest)}<span class="arr" aria-hidden="true"></span></a>
+          <a href={H('/about/')} class="btn btn-ghost">{L(C.nav[2].label)}</a>
+        </div>
+      </div>
+      <a class="hero-cover rise d3" href={H(`/books/${latest.slug}/`)} aria-label={latest.title}><BookCover book={latest} eager /></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L(C.nav[1].label)}</p><h2>{L(C.booksTitle)}</h2><p>{L(C.booksLead)}</p></header>
+      <div class="grid cols-4">
+        {C.books.map((b) => (
+          <a class="book-card reveal" href={H(`/books/${b.slug}/`)}>
+            <BookCover book={b} size="sm" />
+            <div><p class="meta">{L(b.kind)} · {b.year}</p><h3>{b.title}</h3><p>{L(b.sub)}</p></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L({ en: 'Praise', zh: '評語' })}</p><h2>{L(C.praiseTitle)}</h2></header>
+      <div class="grid cols-3">
+        {C.praise.map((q) => <blockquote class="quote reveal" style="margin:0"><p>“{L(q.text)}”</p><cite>{L(q.who)}</cite></blockquote>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="portrait reveal"><Img src={photo('author', 'portrait')} alt={lang === 'zh' ? '作家 Iris Calloway' : 'The author Iris Calloway'} sizes="(min-width: 960px) 520px, 100vw" widths={[500, 800, 1100]} /></div>
+      <div class="reveal">
+        <p class="eyebrow">{L(C.nav[2].label)}</p>
+        <h2>{L(C.about.title)}</h2>
+        <p style="margin:1.4rem 0 1.8rem;color:var(--fg-muted)">{L(C.about.bio[0])}</p>
+        <a href={H('/about/')} class="link-arrow">{L(C.strings.readMore)}<span class="arr" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container" style="max-width:62rem">
+      <header class="sec-head reveal"><p class="eyebrow">{L(C.nav[3].label)}</p><h2>{L(C.eventsTitle)}</h2></header>
+      <div>
+        {C.events.slice(0, 3).map((e) => (
+          <article class="event reveal"><div class="date"><strong>{e.day}</strong><span>{L(e.month)}</span></div><div><h3>{L(e.title)}</h3><p>{L(e.where)}</p></div><a href={H('/events/')} class="btn btn-ghost btn-sm">{L(C.rsvp)}</a></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</Layout>

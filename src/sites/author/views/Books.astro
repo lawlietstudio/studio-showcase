@@ -1,0 +1,30 @@
+---
+import Layout from '../Layout.astro';
+import BookCover from '../BookCover.astro';
+import PageHead from '../../../components/PageHead.astro';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/books/" title={L(C.booksTitle)} description={L(C.booksLead)}>
+  <PageHead title={L(C.booksTitle)} lead={L(C.booksLead)} eyebrow={L(C.nav[1].label)} plain />
+  <section class="section tight">
+    <div class="container">
+      {C.books.map((b) => (
+        <article class="book-row reveal">
+          <a href={href('author', `/books/${b.slug}/`, lang)}><BookCover book={b} /></a>
+          <div>
+            <p class="eyebrow">{L(b.kind)} · {b.year}</p>
+            <h2 style="font-style:italic;margin-bottom:0.6rem">{b.title}</h2>
+            <p style="font-size:1.3rem;color:var(--fg-muted)">{L(b.sub)}</p>
+            <p>{L(b.blurb[0])}</p>
+            <p class="praise-one">{L(b.praise)}</p>
+            <a href={href('author', `/books/${b.slug}/`, lang)} class="btn btn-ghost" style="margin-top:0.8rem">{L(C.strings.readMore)}<span class="arr" aria-hidden="true"></span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

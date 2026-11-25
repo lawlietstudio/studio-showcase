@@ -1,0 +1,19 @@
+---
+import Img from '../../components/Img.astro';
+import { photo } from '../../lib/assets';
+import { href, t, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+const { lang } = Astro.props as { lang: Lang };
+---
+<section class="cta-band">
+  <Img class="cta-img" src={photo('accounting', 'abstract')} alt="" widths={[800, 1200, 1600]} />
+  <div class="container reveal">
+    <h2>{t({ en: 'Ready for numbers you can trust?', zh: '準備好擁有可靠的數字了嗎？' }, lang)}</h2>
+    <p>{t({ en: 'Book a free 30-minute call. We will tell you honestly whether we are the right fit.', zh: '預約免費 30 分鐘通話，我們會坦白告訴您是否合適。' }, lang)}</p>
+    <div class="actions">
+      <a href={href('accounting', '/contact/', lang)} class="btn btn-primary">{t(C.cta, lang)}<span class="arr" aria-hidden="true"></span></a>
+      <a href={href('accounting', '/services/', lang)} class="btn btn-light">{t({ en: 'See our services', zh: '查看服務' }, lang)}</a>
+    </div>
+  </div>
+</section>

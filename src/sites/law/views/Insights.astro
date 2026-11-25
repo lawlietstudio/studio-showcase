@@ -1,0 +1,33 @@
+---
+import Layout from '../Layout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/insights/" title={L(C.insightsTitle)} description={L(C.insightsLead)}>
+  <PageHead title={L(C.insightsTitle)} lead={L(C.insightsLead)} image={photo('law', 'detail')} center />
+  <section class="section">
+    <div class="container">
+      <div class="grid cols-2">
+        {C.articles.map((a) => (
+          <article class="card post reveal">
+            <a href={href('law', `/insights/${a.slug}/`, lang)}>
+              <div class="card-img"><Img src={photo('law', a.image)} alt="" sizes="(min-width: 960px) 560px, 100vw" widths={[480, 800, 1100]} /></div>
+              <div class="card-body">
+                <p class="meta"><span>{L(a.area)}</span><span>{a.date}</span></p>
+                <h3>{L(a.title)}</h3>
+                <p>{L(a.excerpt)}</p>
+                <span class="link-arrow">{L(C.strings.read)}<span class="arr" aria-hidden="true"></span></span>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

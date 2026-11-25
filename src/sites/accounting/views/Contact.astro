@@ -1,0 +1,25 @@
+---
+import Layout from '../Layout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import { photo } from '../../../lib/assets';
+import { t, telHref, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/contact/" title={L(C.nav[4].label)} description={L(C.contact.lead)}>
+  <PageHead title={L(C.contact.title)} lead={L(C.contact.lead)} image={photo('accounting', 'meeting')} />
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <div class="info-card"><h3>{L({ en: 'Phone', zh: '電話' })}</h3><p><a href={telHref(C.phone)}>{C.phone}</a></p></div>
+        <div class="info-card"><h3>{L({ en: 'Email', zh: '電郵' })}</h3><p><a href={`mailto:${C.email}`}>{C.email}</a></p></div>
+        <div class="info-card"><h3>{L({ en: 'Office', zh: '辦公室' })}</h3><p>{L(C.address)}</p></div>
+        <div class="info-card"><h3>{L({ en: 'Hours', zh: '辦公時間' })}</h3><p>{L(C.hours)}</p></div>
+      </div>
+      <ContactForm lang={lang} email={C.email} form={C.contact.form} topics={C.services.map((s) => s.name)} topicLabel={C.contact.form.topic} />
+    </div>
+  </section>
+</Layout>

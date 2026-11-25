@@ -1,0 +1,9 @@
+---
+import { atelierRoutes } from '../../sites/atelier/routes';
+
+export function getStaticPaths() {
+  return atelierRoutes();
+}
+const { View, ...props } = Astro.props;
+---
+<View {...props} />

@@ -1,0 +1,33 @@
+---
+import { getImage } from 'astro:assets';
+import Layout from '../Layout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import { photo } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const entries = await Promise.all(C.products.map(async (p) => {
+  const img = await getImage({ src: photo('atelier', p.image), width: 200, format: 'webp' });
+  return [p.slug, { name: L(p.name), price: p.price, image: img.src, href: href('atelier', `/shop/${p.slug}/`, lang) }] as const;
+}));
+const products = Object.fromEntries(entries);
+---
+<Layout lang={lang} path="/cart/" title={L(C.cart.title)}>
+  <PageHead title={L(C.cart.title)} eyebrow={L(C.strings.cart)} plain />
+  <section class="section tight">
+    <div class="container" style="max-width:56rem" data-cart-root data-products={JSON.stringify(products)} data-remove={L(C.cart.remove)}>
+      <div data-cart-empty hidden>
+        <p style="font-size:1.2rem;color:var(--fg-muted)">{L(C.cart.empty)}</p>
+        <a href={href('atelier', '/shop/', lang)} class="btn btn-primary">{L(C.cart.continue)}<span class="arr" aria-hidden="true"></span></a>
+      </div>
+      <div data-cart-full hidden>
+        <div data-cart-lines></div>
+        <div class="cart-sum"><span>{L(C.cart.subtotal)} <strong data-cart-total>$0</strong></span><button type="button" class="btn btn-primary" disabled style="opacity:.6;cursor:not-allowed">{L(C.cart.checkout)}</button></div>
+        <p class="cart-note">{L(C.cart.note)}</p>
+        <p style="margin-top:1.4rem"><a href={href('atelier', '/shop/', lang)} class="link-arrow">{L(C.cart.continue)}<span class="arr" aria-hidden="true"></span></a></p>
+      </div>
+    </div>
+  </section>
+</Layout>

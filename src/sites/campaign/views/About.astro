@@ -1,0 +1,33 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import { photo } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const A = C.about;
+---
+<Layout lang={lang} path="/about/" title={L(C.nav[3].label)} description={L(A.lead)}>
+  <PageHead title={L(A.title)} lead={L(A.lead)} eyebrow={L(C.nav[3].label)} image={photo('campaign', 'listening')} />
+  <section class="section">
+    <div class="container split">
+      <div class="pic-round reveal"><Img src={photo('campaign', 'portrait')} alt="Elena Voss" sizes="(min-width: 960px) 520px, 100vw" widths={[500, 800, 1100]} /></div>
+      <div class="reveal">{A.story.map((p) => <p style="font-size:1.18rem">{L(p)}</p>)}</div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container split">
+      <div class="reveal"><h2 style="margin-bottom:2rem">{L(A.timelineTitle)}</h2>
+        <ul class="timeline">{A.timeline.map((x) => <li><strong>{x.year}</strong><span>{L(x.text)}</span></li>)}</ul>
+      </div>
+      <div class="reveal"><h2 style="margin-bottom:2rem">{L(A.quotesTitle)}</h2>
+        <div class="grid">{A.quotes.map((q) => <blockquote class="quote" style="margin:0"><p>“{L(q.text)}”</p><cite>{L(q.who)}</cite></blockquote>)}</div>
+      </div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

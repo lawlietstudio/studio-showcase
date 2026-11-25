@@ -1,0 +1,10 @@
+---
+import { studioRoutes } from '../sites/studio/routes';
+
+// The portfolio lives at the root of the site; the demos live in their own folders (law, accounting, ...).
+export function getStaticPaths() {
+  return studioRoutes();
+}
+const { View, ...props } = Astro.props;
+---
+<View {...props} />

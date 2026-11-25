@@ -1,0 +1,43 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import BookCover from '../BookCover.astro';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const L = (v: any) => t(v, lang);
+const b = C.books.find((x) => x.slug === slug)!;
+const others = C.books.filter((x) => x.slug !== slug);
+---
+<Layout lang={lang} path={`/books/${b.slug}/`} title={b.title} description={L(b.sub)}>
+  <section class="section" style="padding-top:calc(var(--header-h) + 6rem)">
+    <div class="container pdp">
+      <div class="reveal"><BookCover book={b} eager /></div>
+      <div class="reveal">
+        <p class="eyebrow">{L(b.kind)} · {b.year}</p>
+        <h1>{b.title}</h1>
+        <p class="sub">{L(b.sub)}</p>
+        {b.blurb.map((p) => <p>{L(p)}</p>)}
+        <div class="facts">
+          <div><b>{L(C.facts.year)}</b>{b.year}</div><div><b>{L(C.facts.pages)}</b>{b.pages}</div><div><b>{L(C.facts.kind)}</b>{L(b.kind)}</div>
+        </div>
+        <blockquote class="excerpt"><small>{L(C.excerptLabel)}</small>“{L(b.excerpt)}”</blockquote>
+        <p class="praise-one">{L(b.praise)}</p>
+        <h3 style="margin-top:2rem">{L(C.buy)}</h3>
+        <div class="buy">{C.retailers.map((r) => <a href={href('author', '/contact/', lang)} class="btn btn-ghost btn-sm">{L(r)}</a>)}</div>
+      </div>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head reveal"><h2>{L({ en: 'More by Iris Calloway', zh: 'Iris Calloway 的其他作品' })}</h2></header>
+      <div class="grid cols-3">
+        {others.map((o) => (
+          <a class="book-card reveal" href={href('author', `/books/${o.slug}/`, lang)}><BookCover book={o} size="sm" /><div><p class="meta">{L(o.kind)} · {o.year}</p><h3>{o.title}</h3></div></a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

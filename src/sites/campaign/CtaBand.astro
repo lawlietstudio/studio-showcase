@@ -1,0 +1,19 @@
+---
+import Img from '../../components/Img.astro';
+import { photo } from '../../lib/assets';
+import { href, t, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+const { lang } = Astro.props as { lang: Lang };
+---
+<section class="cta-band">
+  <Img class="cta-img" src={photo('campaign', 'townhall')} alt="" widths={[800, 1200, 1600]} />
+  <div class="container reveal">
+    <h2>{t({ en: 'Your neighbourhood. Your voice.', zh: '您的社區，您的聲音。' }, lang)}</h2>
+    <p>{t({ en: 'Join hundreds of neighbours who are already on board.', zh: '加入已經參與其中的數百位鄰居。' }, lang)}</p>
+    <div class="actions">
+      <a href={href('campaign', '/get-involved/', lang)} class="btn btn-primary">{t(C.cta, lang)}<span class="arr" aria-hidden="true"></span></a>
+      <a href={href('campaign', '/get-involved/', lang)} class="btn btn-light">{t(C.hero.donate, lang)}</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+---
+import Layout from '../Layout.astro';
+import CtaBand from '../CtaBand.astro';
+import PageHead from '../../../components/PageHead.astro';
+import Img from '../../../components/Img.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const pics = ['housing', 'transit', 'listening', 'park', 'smallbiz', 'library'];
+---
+<Layout lang={lang} path="/priorities/" title={L(C.nav[1].label)} description={L(C.prioritiesLead)}>
+  <PageHead title={L(C.prioritiesTitle)} lead={L(C.prioritiesLead)} eyebrow={L(C.nav[1].label)} image={photo('campaign', 'hero')} />
+  <section class="section">
+    <div class="container">
+      {C.priorities.map((p, i) => (
+        <article class="prio-row reveal" id={p.id}>
+          <div>
+            <Ico src={icon('campaign', i + 1)} />
+            <h2>{L(p.name)}</h2>
+            <p class="big">{L(p.headline)}</p>
+            <p style="color:var(--fg-muted)">{L(p.short)}</p>
+          </div>
+          <div>
+            <h3 style="font-size:1.4rem;margin-bottom:0.8rem">{L(C.strings.plan)}</h3>
+            <ul>{p.points.map((x) => <li>{L(x)}</li>)}</ul>
+          </div>
+          <div class="pic"><Img src={photo('campaign', pics[i])} alt="" sizes="(min-width: 960px) 380px, 100vw" widths={[480, 800]} /></div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Layout>

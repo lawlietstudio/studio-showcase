@@ -1,0 +1,26 @@
+---
+import Shell from '../../components/Shell.astro';
+import '@fontsource/shippori-mincho/400.css';
+import '@fontsource/shippori-mincho/500.css';
+import '@fontsource/shippori-mincho/600.css';
+import '@fontsource-variable/jost';
+import '@fontsource/noto-sans-tc/400.css';
+import '@fontsource/noto-serif-tc/400.css';
+import './theme.css';
+import { cfg } from './config';
+import { href, t, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+interface Props { lang: Lang; path: string; title?: string; description?: string }
+const { lang, path, title, description } = Astro.props;
+---
+<Shell cfg={cfg} lang={lang} path={path} title={title} description={description}>
+  <a slot="header-extra" class="cart-link" href={href('atelier', '/cart/', lang)} aria-label={t(C.strings.cart, lang)}>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 8h14l-1.2 11H6.2L5 8Z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
+    <span class="cart-count" data-cart-count hidden>0</span>
+  </a>
+  <slot />
+</Shell>
+<script>
+  import '../../scripts/cart.ts';
+</script>

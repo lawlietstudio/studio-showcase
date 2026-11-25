@@ -1,0 +1,19 @@
+---
+import Layout from '../Layout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+---
+<Layout lang={lang} path="/events/" title={L(C.nav[3].label)} description={L(C.eventsLead)}>
+  <PageHead title={L(C.eventsTitle)} lead={L(C.eventsLead)} eyebrow={L(C.nav[3].label)} plain />
+  <section class="section tight">
+    <div class="container" style="max-width:62rem">
+      {C.events.map((e) => (
+        <article class="event reveal"><div class="date"><strong>{e.day}</strong><span>{L(e.month)}</span></div><div><h3>{L(e.title)}</h3><p>{L(e.where)}</p></div><a href={href('author', '/contact/', lang)} class="btn btn-ghost btn-sm">{L(C.rsvp)}</a></article>
+      ))}
+    </div>
+  </section>
+</Layout>

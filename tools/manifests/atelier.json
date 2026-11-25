@@ -1,0 +1,30 @@
+{
+  "site": "atelier",
+  "art": "Minimal Japanese product and craft photography for an art-supply boutique: warm off-white washi-paper backgrounds with visible paper fibres, soft natural window light from the left, gentle long shadows, wabi-sabi calm, one small vermilion-red accent allowed, photorealistic, shallow depth of field. No text, no letters, no logos, no watermarks, no packaging labels.",
+  "jobs": [
+    { "file": "hero", "shape": "landscape", "prompt": "Flat-lay still life on handmade washi paper: calligraphy brushes resting on a ceramic brush rest, a sumi ink stick and a stone inkwell, a small tin of watercolour half-pans, and a sheet of paper bearing a single bold ink enso circle, generous empty space on the left." },
+    { "file": "p-watercolor-set", "shape": "square", "prompt": "A slim metal tin of twelve Japanese artist watercolour half-pans, open, showing rich colours, with a small round brush lying beside it, on washi paper background." },
+    { "file": "p-sumi-ink", "shape": "square", "prompt": "A traditional sumi ink stick with a gold-embossed relief pattern leaning on a round stone inkstone (suzuri) holding a pool of fresh black ink, on washi paper background." },
+    { "file": "p-fude-brush", "shape": "square", "prompt": "Three Japanese calligraphy brushes (fude) with bamboo handles and tapered animal-hair tips lying on a ceramic brush rest, on washi paper background." },
+    { "file": "p-washi-pad", "shape": "square", "prompt": "A stack of handmade washi paper sheets with visible plant fibres, tied with a thin vermilion cord, a corner of the top sheet slightly lifted, on a pale wooden surface." },
+    { "file": "p-pigments", "shape": "square", "prompt": "Small glass jars of nihonga mineral pigments in vivid malachite green, azurite blue, cinnabar red and ochre, arranged in a shallow wooden tray, on washi paper background." },
+    { "file": "p-gold-leaf", "shape": "square", "prompt": "A booklet of gold leaf (kinpaku) with one thin gold sheet lifted on a pair of bamboo tweezers, glowing softly, on washi paper background." },
+    { "file": "p-pencil-set", "shape": "square", "prompt": "A set of premium graphite drawing pencils in graded shades lying in a slim open wooden box with a small brass sharpener, sharpened tips, on washi paper background." },
+    { "file": "p-sketchbook", "shape": "square", "prompt": "A linen-bound sketchbook lying open on a page of delicate pencil studies of a pine branch, with a vermilion bookmark ribbon and a pencil, on pale wood." },
+    { "file": "craft-brush", "shape": "landscape", "prompt": "The hands of an artisan (no face) binding the hair tuft of a calligraphy brush in a quiet traditional workshop, thread, bamboo handles and small tools on a worn wooden bench, warm window light." },
+    { "file": "craft-paper", "shape": "landscape", "prompt": "Traditional washi papermaking: a craftsperson's hands (no face) lifting a bamboo screen holding a wet sheet of paper pulp from a wooden vat, soft steam, a quiet workshop with warm window light." },
+    { "file": "studio", "shape": "landscape", "prompt": "The calm interior of a Japanese art-supply boutique: pale wooden shelves of paper, brushes and ink, paper lanterns, a low table with a few brushes laid out, soft daylight through a shoji screen. No people, no readable signage." }
+  ],
+  "logo": { "concept": "a brush-painted enso circle that is not quite closed, with a small stylised cloud shape tucked inside its lower half, sumi-e ink brush stroke style, high contrast" },
+  "icons": {
+    "style": "Japanese sumi-e ink-brush icons painted with a few confident calligraphic strokes, varied stroke width, minimal",
+    "items": [
+      "a calligraphy brush pointing downward",
+      "a bottle of ink with a drop beneath it",
+      "a rolled sheet of washi paper",
+      "an artist's palette with three paint blobs",
+      "a single sharpened pencil",
+      "a wrapped parcel tied with a cord"
+    ]
+  }
+}

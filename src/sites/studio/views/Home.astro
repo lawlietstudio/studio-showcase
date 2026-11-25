@@ -1,0 +1,56 @@
+---
+import Layout from '../Layout.astro';
+import ProjectCard from '../ProjectCard.astro';
+import CtaBlock from '../CtaBlock.astro';
+import Img from '../../../components/Img.astro';
+import Ico from '../../../components/Ico.astro';
+import { photo, icon } from '../../../lib/assets';
+import { href, t, type Lang } from '../../../lib/i18n';
+import { C } from '../content';
+
+const { lang } = Astro.props as { lang: Lang };
+const L = (v: any) => t(v, lang);
+const H = (p: string) => href('', p, lang);
+---
+<Layout lang={lang} path="/" description={L(C.metaDescription)}>
+  <section class="st-hero">
+    <Img class="hero-img" src={photo('studio', 'hero')} alt={lang === 'zh' ? '設計工作室的桌面，屏幕顯示高級網站版面' : 'A design studio desk at night with a luxury website layout on screen'} widths={[800, 1200, 1600, 1920]} eager />
+    <div class="container">
+      <div class="copy">
+        <p class="eyebrow rise d1">{L(C.hero.eyebrow)}</p>
+        <h1 class="rise d2">{L(C.hero.title)}</h1>
+        <p class="lead rise d3">{L(C.hero.lead)}</p>
+        <div class="actions rise d4">
+          <a href={H('/work/')} class="btn btn-primary">{L(C.hero.primary)}<span class="arr" aria-hidden="true"></span></a>
+          <a href={H('/approach/')} class="btn btn-light">{L(C.hero.secondary)}</a>
+        </div>
+      </div>
+      <dl class="stats rise d4" style="--cols:4">{C.stats.map((s) => <div><dt>{s.n}{s.suffix ?? ''}</dt><dd>{L(s.t)}</dd></div>)}</dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head reveal"><p class="eyebrow">{L(C.nav[1].label)}</p><h2>{L(C.workTitle)}</h2><p>{L(C.workLead)}</p></header>
+      <div class="grid cols-3">{C.projects.map((p) => <ProjectCard p={p} lang={lang} />)}</div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <header class="sec-head center reveal"><p class="eyebrow">{L({ en: 'Capabilities', zh: '專長' })}</p><h2>{L(C.capabilitiesTitle)}</h2></header>
+      <div class="grid cols-3">
+        {C.capabilities.map((c) => <article class="cap reveal"><Ico src={icon('studio', c.icon)} /><h3>{L(c.title)}</h3><p>{L(c.text)}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="sec-head reveal"><p class="eyebrow">{L(C.nav[2].label)}</p><h2>{L(C.approachTitle)}</h2><p>{L(C.approachLead)}</p></header>
+      <ol class="steps">{C.steps.map((s, i) => <li class="reveal"><span class="no">0{i + 1}</span><h3>{L(s.title)}</h3><p>{L(s.text)}</p></li>)}</ol>
+    </div>
+  </section>
+
+  <CtaBlock lang={lang} />
+</Layout>

@@ -1,0 +1,13 @@
+---
+import { href, t, type Lang } from '../../lib/i18n';
+import { C } from './content';
+
+const { lang } = Astro.props as { lang: Lang };
+---
+<section class="cta-block">
+  <div class="container reveal">
+    <h2>{t(C.ctaBlock.title, lang)}</h2>
+    <p>{t(C.ctaBlock.text, lang)}</p>
+    <a href={href('', '/contact/', lang)} class="btn btn-primary">{t(C.cta, lang)}<span class="arr" aria-hidden="true"></span></a>
+  </div>
+</section>

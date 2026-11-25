@@ -1,0 +1,9 @@
+---
+import { campaignRoutes } from '../../sites/campaign/routes';
+
+export function getStaticPaths() {
+  return campaignRoutes();
+}
+const { View, ...props } = Astro.props;
+---
+<View {...props} />
