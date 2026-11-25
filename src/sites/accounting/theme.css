@@ -106,3 +106,10 @@
   .float-card { left: 1rem; }
 }
 @media (max-width: 640px) { .process, .packages, .svc-detail ul { grid-template-columns: minmax(0, 1fr); } .cal td:first-child { width: 7rem; } .cal th, .cal td { padding: 0.9rem 1rem; } }
+
+/* the M&F lettermark is wide: show it at a lockup size beside the name, divided by a hairline */
+.accounting .brand-mark { --s: 26px !important; --ico-color: var(--bg-dark); }
+.accounting .brand { gap: 0.9rem; }
+.accounting .brand-name { padding-left: 0.9rem; border-left: 1px solid var(--line); font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+.accounting .foot-mark { --s: 34px !important; }
+@media (max-width: 560px) { .accounting .brand-mark { --s: 20px !important; } .accounting .brand-name { padding-left: 0.6rem; font-size: 0.95rem; } .accounting .brand { gap: 0.6rem; } }

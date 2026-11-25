@@ -1,5 +1,7 @@
 ---
 // A mask icon or logo: the WebP only supplies the shape, the colour comes from CSS (`--ico-color`, default currentColor).
+// `size` is the height in pixels; the width follows the image's own proportions (a lettermark can be wider than tall).
 const { src, size = 56, class: className } = Astro.props;
+const ratio = src.width && src.height ? Math.round((src.width / src.height) * 1000) / 1000 : 1;
 ---
-<span class:list={['ico', className]} style={`--ico:url(${src.src});--s:${size}px`} aria-hidden="true"></span>
+<span class:list={['ico', className]} style={`--ico:url(${src.src});--s:${size}px;--r:${ratio}`} aria-hidden="true"></span>

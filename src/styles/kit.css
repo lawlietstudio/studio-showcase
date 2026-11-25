@@ -37,7 +37,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .center { text-align: center; }
 
 /* ---------- icons and logos (transparent masks coloured by CSS) ---------- */
-.ico { display: inline-block; flex: none; width: var(--s, 56px); height: var(--s, 56px); background-color: var(--ico-color, currentColor); -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; }
+.ico { display: inline-block; flex: none; width: calc(var(--s, 56px) * var(--r, 1)); height: var(--s, 56px); background-color: var(--ico-color, currentColor); -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; }
 
 /* ---------- small labels ---------- */
 .eyebrow { display: inline-flex; align-items: center; gap: 0.9rem; margin: 0 0 1.2rem; font: 600 0.72rem/1.4 var(--font-body); letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); }
@@ -228,7 +228,8 @@ body:has(.menu-toggle:checked) { overflow: hidden; }
 /* narrow phones: a long wordmark must never push the language switch off screen */
 @media (max-width: 560px) {
   body.site .site-header .brand { font-size: 1rem; letter-spacing: 0.05em; gap: 0; }
-  body.site .site-header .brand-mark { display: none; }
+  /* only the sites with a long wordmark give up the mark on phones */
+  body.law .site-header .brand-mark, body.campaign .site-header .brand-mark { display: none; }
 }
 
 /* Chinese line breaking: words (wrapped by common.ts) stay together; headings may be wider than their Latin max-width */

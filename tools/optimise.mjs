@@ -37,32 +37,37 @@ function segments(profile, min, gap) {
 }
 
 /** Cuts a square region around a bounding box out of a light-on-black raster and returns a transparent WebP mask. */
-async function maskFrom(data, W, H, C, box, size, pad, thicken, dest) {
+async function maskFrom(data, W, H, C, box, size, pad, thicken, dest, keepAspect = false) {
   const red = (x, y) => data[(y * W + x) * C];
   const { minX, maxX, minY, maxY } = box;
-  const side = Math.round(Math.max(maxX - minX + 1, maxY - minY + 1) * (1 + pad * 2));
-  const left = Math.round((minX + maxX) / 2 - side / 2);
-  const top = Math.round((minY + maxY) / 2 - side / 2);
+  const bw = maxX - minX + 1, bh = maxY - minY + 1;
+  // icons are square; logos keep their own proportions (a lettermark is much wider than tall)
+  const w0 = Math.round((keepAspect ? bw : Math.max(bw, bh)) * (1 + pad * 2));
+  const h0 = Math.round((keepAspect ? bh : Math.max(bw, bh)) * (1 + pad * 2));
+  const left = Math.round((minX + maxX) / 2 - w0 / 2);
+  const top = Math.round((minY + maxY) / 2 - h0 / 2);
   // brightest values in the region define "full opacity"
   const values = [];
   for (let y = minY; y <= maxY; y += 2) for (let x = minX; x <= maxX; x += 2) values.push(red(x, y));
   values.sort((a, b) => a - b);
   const hi = Math.max(120, values[Math.floor(values.length * 0.995)] ?? 255);
-  const alpha = Buffer.alloc(side * side);
-  for (let y = 0; y < side; y++)
-    for (let x = 0; x < side; x++) {
+  const alpha = Buffer.alloc(w0 * h0);
+  for (let y = 0; y < h0; y++)
+    for (let x = 0; x < w0; x++) {
       const sx = left + x, sy = top + y;
       const v = sx >= 0 && sy >= 0 && sx < W && sy < H ? red(sx, sy) : 0;
-      alpha[y * side + x] = Math.max(0, Math.min(255, Math.round(((v - 8) / (hi - 8)) * 255)));
+      alpha[y * w0 + x] = Math.max(0, Math.min(255, Math.round(((v - 8) / (hi - 8)) * 255)));
     }
-  let img = sharp(alpha, { raw: { width: side, height: side, channels: 1 } });
-  if (thicken) img = img.blur(Math.max(0.8, side / 260)).linear(2.1, -20);
-  const { data: a, info } = await img.resize(size, size, { kernel: 'lanczos3' }).toColourspace('b-w').raw().toBuffer({ resolveWithObject: true });
-  const rgba = Buffer.alloc(size * size * 4);
-  for (let i = 0; i < size * size; i++) {
+  let img = sharp(alpha, { raw: { width: w0, height: h0, channels: 1 } });
+  if (thicken) img = img.blur(Math.max(0.8, Math.max(w0, h0) / (thicken === true ? 260 : thicken))).linear(2.1, -20); // a number = how much the strokes grow (smaller = bolder)
+  const scale = size / Math.max(w0, h0);
+  const ow = Math.max(1, Math.round(w0 * scale)), oh = Math.max(1, Math.round(h0 * scale));
+  const { data: a, info } = await img.resize(ow, oh, { kernel: 'lanczos3' }).toColourspace('b-w').raw().toBuffer({ resolveWithObject: true });
+  const rgba = Buffer.alloc(ow * oh * 4);
+  for (let i = 0; i < ow * oh; i++) {
     rgba[i * 4] = 255; rgba[i * 4 + 1] = 255; rgba[i * 4 + 2] = 255; rgba[i * 4 + 3] = a[i * info.channels];
   }
-  await sharp(rgba, { raw: { width: size, height: size, channels: 4 } }).webp({ lossless: true, effort: 6 }).toFile(dest);
+  await sharp(rgba, { raw: { width: ow, height: oh, channels: 4 } }).webp({ lossless: true, effort: 6 }).toFile(dest);
 }
 
 async function loadRaw(file) {
@@ -84,6 +89,29 @@ function bbox(raw, x0, y0, x1, y1) {
   return { minX, maxX, minY, maxY };
 }
 
+// Hairline logos need their strokes grown so they survive at header size (smaller number = bolder).
+const logoGrow = { studio: 110 };
+
+// Each site's favicon is its own logo: the mark in the site's accent colour on its dark background.
+const faviconColours = {
+  law: ['#0c1714', '#c9a96a'], accounting: ['#0b2b24', '#6fd3b6'], campaign: ['#0b2a4a', '#f26a21'],
+  atelier: ['#1a1816', '#e0553b'], author: ['#1d231d', '#d9a06b'], studio: ['#0d0f13', '#d6b56a'],
+};
+async function makeFavicon(site, maskFile) {
+  const [bg, fg] = faviconColours[site] ?? ['#0d0f13', '#d6b56a'];
+  const size = 64;
+  const meta = await sharp(maskFile).metadata();
+  const wide = (meta.width ?? 1) / (meta.height ?? 1) > 1.5;
+  const inner = wide ? 56 : 42; // a wide lettermark gets more of the 64 px square
+  const mask = await sharp(maskFile).resize(inner, inner, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+  const tinted = await sharp({ create: { width: inner, height: inner, channels: 4, background: fg } })
+    .composite([{ input: mask, blend: 'dest-in' }]).png().toBuffer();
+  mkdirSync(join(root, 'public', 'favicons'), { recursive: true });
+  await sharp({ create: { width: size, height: size, channels: 4, background: bg } })
+    .composite([{ input: tinted, left: (size - inner) / 2, top: (size - inner) / 2 }])
+    .png().toFile(join(root, 'public', 'favicons', `${site}.png`));
+}
+
 let count = 0;
 for (const site of readdirSync(join(root, 'art-raw'), { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith('_')).map((d) => d.name)) {
   if (wanted.length && !wanted.includes(site)) continue;
@@ -99,8 +127,9 @@ for (const site of readdirSync(join(root, 'art-raw'), { withFileTypes: true }).f
       const dest = join(out, 'logo.webp');
       if (!stale(from, dest)) continue;
       const raw = await loadRaw(from);
-      await maskFrom(raw.data, raw.W, raw.H, raw.C, bbox(raw, 0, 0, raw.W - 1, raw.H - 1), 512, 0.06, false, dest);
-      console.log(`${site}/logo`); count++;
+      await maskFrom(raw.data, raw.W, raw.H, raw.C, bbox(raw, 0, 0, raw.W - 1, raw.H - 1), 640, 0.04, logoGrow[site] ?? true, dest, true);
+      await makeFavicon(site, dest);
+      console.log(`${site}/logo + favicon`); count++;
       continue;
     }
 
